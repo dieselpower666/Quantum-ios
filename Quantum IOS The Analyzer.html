@@ -1,12 +1,13 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Analyzer | Quantum IOS</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>The Analyzer | Quantum IOS</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&amp;family=Playfair+Display:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
         :root {
             --primary-dark: #0A0A0A;
             --secondary-dark: #1A1A1A;
@@ -557,383 +558,262 @@
     </style>
 </head>
 <body>
-    <header>
-  <div class="container header-content">
-    <div class="logo">
-      <img src="logo.png" alt="Quantum IOS Logo" width="40" height="40" />
-      <div class="logo-text">
-        <h1>The Analyzer</h1>
-        <span>Quantum IOS</span>
-      </div>
-    </div>
-  </div>
+<header>
+<div class="container header-content">
+<div class="logo">
+<img alt="Quantum IOS Logo" height="40" src="logo.png" width="40"/>
+<div class="logo-text">
+<h1>The Analyzer</h1>
+<span>Quantum IOS</span>
+</div>
+</div>
+</div>
 </header>
+<main class="main">
+<div class="container">
+<section class="hero">
+<h2>Industrial Property Intelligence Platform</h2>
+<p>Analyze commercial properties with precision, identify ideal tenants, and maximize your investment potential with our advanced scoring system.</p>
+</section>
+<div class="search-container">
+<form class="search-form" id="propertyForm">
+<div class="form-group">
+<label for="propertyAddress">Property Address</label>
+<input class="form-control" id="propertyAddress" placeholder="Enter full property address" required="" type="text" value="1247 Industrial Blvd, Chicago, IL 6608"/>
+</div>
+<button class="btn" type="submit">Analyze Property</button>
+</form>
+</div>
+<div class="loading" id="loading">
+<div class="spinner"></div>
+<p>Analyzing property and identifying optimal tenants...</p>
+</div>
+<div class="results-container" id="resultsContainer">
+<section id="propertyOverview">
+<h2 class="section-title">Property Overview</h2>
+<div class="property-card">
+<div class="property-header">
+<div class="property-address">
+<h3 id="propertyAddressDisplay">1247 Industrial Blvd, Chicago, IL 60608</h3>
+</div>
+<div class="property-score">
+<span class="badge badge-success" id="propertyClassDisplay">Warehouse (Suitable for Industrial Operating Space – IOS)</span>
+</div>
+</div>
+<div class="html-content" id="propertyFeatures">
+<div class="property-meta">
+<div class="meta-item">
+<h4>Acreage</h4>
+<p>8.5 acres</p>
+</div>
+<div class="meta-item">
+<h4>Total Square Footage</h4>
+<p>125,000 sqft</p>
+</div>
+<div class="meta-item">
+<h4>Building Type</h4>
+<p>Manufacturing / Distribution</p>
+</div>
+<div class="meta-item">
+<h4>Zoning</h4>
+<p>M-1 Manufacturing</p>
+</div>
+<div class="meta-item">
+<h4>Coordinates</h4>
+<p>N/A</p>
+</div>
+</div>
+<h4>Key Physical Attributes</h4>
+<ul class="features-list"><li>Clear height: 32'</li><li>Dock doors: 12</li><li>Drive-in bays: 1</li><li>Construction type: Steel frame with concrete floor</li><li>Parking spaces: 100</li></ul>
+</div>
+</div>
+</section>
+<section id="marketAnalysis">
+<h2 class="section-title">Market Context</h2>
+<div class="property-card html-content" id="marketAnalysisContent">
+<h3>Local Industrial Trends</h3>
+<ul>
+<li>Vacancy rate: Low (assumed 5% based on regional data)</li>
+<li>Lease rates: $7.50/sq ft</li>
+<li>Absorption rate: Positive, due to new companies entering the market</li>
+</ul>
+<h3>Logistics Infrastructure</h3>
+<p>Situated near major highways, facilitating easy access to Port of Jacksonville</p>
+<p>Close proximity to rail lines servicing regional distribution</p>
+<h3>Regional Growth Drivers</h3>
+<ul>
+<li>Employment growth: Rapidly increasing in logistics and industrial sectors</li>
+<li>Population growth: Jacksonville experiencing significant growth, particularly in manufacturing</li>
+<li>New developments: Ongoing industrial projects in the area, expanding warehouse space and logistics facilities</li>
+</ul>
+<h3>Comparables</h3>
+<ul>
+<li>Nearby distribution warehouse – 35,000 sqft, 14' clear height, renovated</li>
+<li>700 Ellis Blvd - 40,000 sqft, 15' clear height, occupied by logistics firm</li>
+<li>Distribution center - 30,000 sqft, multiple loading docks, high demand</li>
+<li>Older warehouse - 50,000 sqft, 12' clear height, lower lease rate but steady demand</li>
+</ul>
+</div>
+</section>
+<section id="tenantAnalysis">
+<h2 class="section-title">Tenant Suitability Analysis</h2>
+<div class="property-card html-content" id="tenantAnalysisContent">
+<h3>Top Candidate Tenants</h3>
+<table>
+<thead>
+<tr>
+<th>Industry Category</th>
+<th>Operational Location</th>
+<th>Space Need</th>
+<th>Infrastructure Needs</th>
+</tr>
+</thead>
+<tbody><tr><td>Midwest Logistics Corp</td><td>Chicago, IL</td><td>125,000 sqft</td><td>Multi-modal Distribution</td></tr><tr><td>Aurora Manufacturing</td><td>Chicago, IL</td><td>125,000 sqft</td><td>Auto Parts Assembly</td></tr><tr><td>ChemCore Distribution</td><td>Chicago, IL</td><td>125,000 sqft</td><td>Chemical Storage</td></tr></tbody>
+</table>
+</div>
+</section>
+<section id="scoringSystem">
+<h2 class="section-title">100-Point Scoring Model</h2>
+<div class="html-content" id="scoringCardsContainer">
+<div class="score-card">
+<div class="score-header">
+<div class="score-title">Top Tenant Scores</div>
+<div class="score-value">89</div>
+</div>
+<div class="score-details">
+<div class="score-detail">
+<h5>Operational Fit</h5>
+<p>27/30</p>
+</div>
+<div class="score-detail">
+<h5>Physical Compatibility</h5>
+<p>19/20</p>
+</div>
+<div class="score-detail">
+<h5>Financial Strength</h5>
+<p>18/20</p>
+</div>
+<div class="score-detail">
+<h5>Strategic Synergy</h5>
+<p>8/10</p>
+</div>
+<div class="score-detail">
+<h5>Lease Terms Potential</h5>
+<p>8/10</p>
+</div>
+<div class="score-detail">
+<h5>Risk Profile</h5>
+<p>9/10</p>
+</div>
+</div>
+</div>
+</div>
+<div class="property-card html-content" id="rankedTenantsContent">
+<h3>Ranked Tenant Scoring</h3>
+<table>
+<thead>
+<tr>
+<th>Rank</th>
+<th>Tenant Name</th>
+<th>Total Score</th>
+<th>Fit Summary</th>
+<th>Est. Cap Rate</th>
+</tr>
+</thead>
+<tbody><tr><td>1</td><td>Midwest Logistics Corp</td><td>94</td><td>Perfect match for multi-modal distribution needs</td><td>7.2%</td></tr><tr><td>2</td><td>Aurora Manufacturing</td><td>87</td><td>Excellent fit for automotive parts assembly</td><td>7.2%</td></tr><tr><td>3</td><td>ChemCore Distribution</td><td>81</td><td>Strong candidate for specialty chemicals storage</td><td>7.2%</td></tr></tbody>
+</table>
+</div>
+</section>
+<section id="financialAnalysis">
+<h2 class="section-title">Financial Modeling</h2>
+<div class="property-card">
+<div class="html-content" id="financialData">
+<h3>Projected Year 1 Pro Forma for Top 3 Tenants</h3>
+<p>Base Rent: $7.50/sq ft</p>
+<p>Operating Expenses (OPEX): $150,000</p>
+<table>
+<thead>
+<tr>
+<th>Tenant Name</th>
+<th>Base Rent</th>
+<th>OPEX</th>
+<th>NOI</th>
+<th>Est. Cap Rate</th>
+</tr>
+</thead>
+<tbody><tr><td>Midwest Logistics Corp</td><td>$812,500</td><td>$182,500</td><td>$630,000</td><td>7.2%</td></tr><tr><td>Aurora Manufacturing</td><td>$812,500</td><td>$182,500</td><td>$630,000</td><td>7.2%</td></tr><tr><td>ChemCore Distribution</td><td>$812,500</td><td>$182,500</td><td>$630,000</td><td>7.2%</td></tr></tbody>
+</table>
+</div>
+<div class="chart-container">
+<canvas id="financialChart"></canvas>
+</div>
+</div>
+</section>
+<section id="leasingStrategy">
+<h2 class="section-title">Leasing Strategy</h2>
+<div class="property-card html-content" id="leasingStrategyContent">
+<h3>Top Tenant Targets</h3>
+<ol>
+<li>Sean Ding</li>
+<li>David Chisholm</li>
+<li>Marks Hernandez</li>
+<li>Alycia Ramirez</li>
+<li>Jeremy Blondel</li>
+</ol>
+<h3>Recommended Leasing Strategy</h3>
+<ul>
+<li>Utilize targeted marketing focused on logistics and manufacturing firms</li>
+<li>Highlight incentives such as tenant improvements and flexible terms</li>
+<li>Leverage nearby logistics infrastructure to attract tenants with robust operational needs</li>
+</ul>
+<h3>Tenant Pitch Strategies</h3>
 
-    <main class="main">
-        <div class="container">
-            <section class="hero">
-                <h2>Industrial Property Intelligence Platform</h2>
-                <p>Analyze commercial properties with precision, identify ideal tenants, and maximize your investment potential with our advanced scoring system.</p>
-            </section>
 
-            <div class="search-container">
-                <form id="propertyForm" class="search-form">
-                    <div class="form-group">
-                        <label for="propertyAddress">Property Address</label>
-                        <input type="text" id="propertyAddress" class="form-control" placeholder="Enter full property address" required value="900 Canal St, Jacksonville, FL 32209">
-                    </div>
-                    <button type="submit" class="btn">Analyze Property</button>
-                </form>
-            </div>
 
-            <div id="loading" class="loading">
-                <div class="spinner"></div>
-                <p>Analyzing property and identifying optimal tenants...</p>
-            </div>
-
-            <div id="resultsContainer" class="results-container">
-                <section id="propertyOverview">
-                    <h2 class="section-title">Property Overview</h2>
-                    <div class="property-card">
-                        <div class="property-header">
-                            <div class="property-address">
-                                <h3 id="propertyAddressDisplay">900 Canal St, Jacksonville, FL 32209</h3>
-                            </div>
-                            <div class="property-score">
-                                <span class="badge badge-success" id="propertyClassDisplay">Warehouse (Suitable for Industrial Operating Space – IOS)</span>
-                            </div>
-                        </div>
-                        <div id="propertyFeatures" class="html-content">
-                            <div class="property-meta">
-                                <div class="meta-item">
-                                    <h4>Acreage</h4>
-                                    <p>8.063 acres</p>
-                                </div>
-                                <div class="meta-item">
-                                    <h4>Total Square Footage</h4>
-                                    <p>34,600 sqft</p>
-                                </div>
-                                <div class="meta-item">
-                                    <h4>Building Type</h4>
-                                    <p>Distribution Warehouse (Regional)</p>
-                                </div>
-                                <div class="meta-item">
-                                    <h4>Zoning</h4>
-                                    <p>OM Lease</p>
-                                </div>
-                                <div class="meta-item">
-                                    <h4>Coordinates</h4>
-                                    <p>30.334409 / -81.700032</p>
-                                </div>
-                            </div>
-                            
-                            <h4>Key Physical Attributes</h4>
-                            <ul class="features-list">
-                                <li>Clear height: 14'</li>
-                                <li>Dock doors: 73</li>
-                                <li>Drive-in bays: 2</li>
-                                <li>Parking spaces: 300</li>
-                                <li>Construction type: Steel frame, concrete floors, metal roof and walls</li>
-                            </ul>
-                        </div>
-                    </div>
-                </section>
-
-                <section id="marketAnalysis">
-                    <h2 class="section-title">Market Context</h2>
-                    <div class="property-card html-content" id="marketAnalysisContent">
-                        <h3>Local Industrial Trends</h3>
-                        <ul>
-                            <li>Vacancy rate: Low (assumed 5% based on regional data)</li>
-                            <li>Lease rates: $7.50/sq ft</li>
-                            <li>Absorption rate: Positive, due to new companies entering the market</li>
-                        </ul>
-                        
-                        <h3>Logistics Infrastructure</h3>
-                        <p>Situated near major highways, facilitating easy access to Port of Jacksonville</p>
-                        <p>Close proximity to rail lines servicing regional distribution</p>
-                        
-                        <h3>Regional Growth Drivers</h3>
-                        <ul>
-                            <li>Employment growth: Rapidly increasing in logistics and industrial sectors</li>
-                            <li>Population growth: Jacksonville experiencing significant growth, particularly in manufacturing</li>
-                            <li>New developments: Ongoing industrial projects in the area, expanding warehouse space and logistics facilities</li>
-                        </ul>
-                        
-                        <h3>Comparables</h3>
-                        <ul>
-                            <li>Nearby distribution warehouse – 35,000 sqft, 14' clear height, renovated</li>
-                            <li>700 Ellis Blvd - 40,000 sqft, 15' clear height, occupied by logistics firm</li>
-                            <li>Distribution center - 30,000 sqft, multiple loading docks, high demand</li>
-                            <li>Older warehouse - 50,000 sqft, 12' clear height, lower lease rate but steady demand</li>
-                        </ul>
-                    </div>
-                </section>
-
-                <section id="tenantAnalysis">
-                    <h2 class="section-title">Tenant Suitability Analysis</h2>
-                    <div class="property-card html-content" id="tenantAnalysisContent">
-                        <h3>Top Candidate Tenants</h3>
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Industry Category</th>
-                                    <th>Operational Location</th>
-                                    <th>Space Need</th>
-                                    <th>Infrastructure Needs</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Marks Hernandez</td>
-                                    <td>Crestview, FL</td>
-                                    <td>15,000 sqft</td>
-                                    <td>Logistics Management</td>
-                                </tr>
-                                <tr>
-                                    <td>David Chisholm</td>
-                                    <td>Boxborough, MA</td>
-                                    <td>20,000 sqft</td>
-                                    <td>Operations Manager</td>
-                                </tr>
-                                <tr>
-                                    <td>Sean Ding</td>
-                                    <td>USA</td>
-                                    <td>25,000 sqft</td>
-                                    <td>Supply Chain Manager</td>
-                                </tr>
-                                <tr>
-                                    <td>Alycia Ramirez</td>
-                                    <td>Hansen, ID</td>
-                                    <td>30,000 sqft</td>
-                                    <td>Warehouse Manager</td>
-                                </tr>
-                                <tr>
-                                    <td>Jeremy Blondel</td>
-                                    <td>Lille, France</td>
-                                    <td>28,000 sqft</td>
-                                    <td>Plant Logistics Manager</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </section>
-
-                <section id="scoringSystem">
-                    <h2 class="section-title">100-Point Scoring Model</h2>
-                    <div id="scoringCardsContainer" class="html-content">
-                        <div class="score-card">
-                            <div class="score-header">
-                                <div class="score-title">Top Tenant Scores</div>
-                                <div class="score-value">89</div>
-                            </div>
-                            <div class="score-details">
-                                <div class="score-detail">
-                                    <h5>Operational Fit</h5>
-                                    <p>27/30</p>
-                                </div>
-                                <div class="score-detail">
-                                    <h5>Physical Compatibility</h5>
-                                    <p>19/20</p>
-                                </div>
-                                <div class="score-detail">
-                                    <h5>Financial Strength</h5>
-                                    <p>18/20</p>
-                                </div>
-                                <div class="score-detail">
-                                    <h5>Strategic Synergy</h5>
-                                    <p>8/10</p>
-                                </div>
-                                <div class="score-detail">
-                                    <h5>Lease Terms Potential</h5>
-                                    <p>8/10</p>
-                                </div>
-                                <div class="score-detail">
-                                    <h5>Risk Profile</h5>
-                                    <p>9/10</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="property-card html-content" id="rankedTenantsContent">
-                        <h3>Ranked Tenant Scoring</h3>
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Rank</th>
-                                    <th>Tenant Name</th>
-                                    <th>Total Score</th>
-                                    <th>Fit Summary</th>
-                                    <th>Est. Cap Rate</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>Sean Ding</td>
-                                    <td>89</td>
-                                    <td>High operational fit and compatibility</td>
-                                    <td>7.5%</td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>David Chisholm</td>
-                                    <td>85</td>
-                                    <td>Solid operational strength</td>
-                                    <td>6.8%</td>
-                                </tr>
-                                <tr>
-                                    <td>3</td>
-                                    <td>Marks Hernandez</td>
-                                    <td>83</td>
-                                    <td>Good compatibility, needs more space</td>
-                                    <td>6.2%</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </section>
-
-                <section id="financialAnalysis">
-                    <h2 class="section-title">Financial Modeling</h2>
-                    <div class="property-card">
-                        <div id="financialData" class="html-content">
-                            <h3>Projected Year 1 Pro Forma for Top 3 Tenants</h3>
-                            <p>Base Rent: $7.50/sq ft</p>
-                            <p>Operating Expenses (OPEX): $150,000</p>
-                            
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>Tenant Name</th>
-                                        <th>Base Rent</th>
-                                        <th>OPEX</th>
-                                        <th>NOI</th>
-                                        <th>Est. Cap Rate</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>Sean Ding</td>
-                                        <td>$187,500</td>
-                                        <td>$150,000</td>
-                                        <td>$37,500</td>
-                                        <td>7.5%</td>
-                                    </tr>
-                                    <tr>
-                                        <td>David Chisholm</td>
-                                        <td>$150,000</td>
-                                        <td>$150,000</td>
-                                        <td>$0</td>
-                                        <td>6.8%</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Marks Hernandez</td>
-                                        <td>$112,500</td>
-                                        <td>$150,000</td>
-                                        <td>-$37,500</td>
-                                        <td>6.2%</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        
-                        <div class="chart-container">
-                            <canvas id="financialChart"></canvas>
-                        </div>
-                    </div>
-                </section>
-
-                <section id="leasingStrategy">
-                    <h2 class="section-title">Leasing Strategy</h2>
-                    <div class="property-card html-content" id="leasingStrategyContent">
-                        <h3>Top Tenant Targets</h3>
-                        <ol>
-                            <li>Sean Ding</li>
-                            <li>David Chisholm</li>
-                            <li>Marks Hernandez</li>
-                            <li>Alycia Ramirez</li>
-                            <li>Jeremy Blondel</li>
-                        </ol>
-                        
-                        <h3>Recommended Leasing Strategy</h3>
-                        <ul>
-                            <li>Utilize targeted marketing focused on logistics and manufacturing firms</li>
-                            <li>Highlight incentives such as tenant improvements and flexible terms</li>
-                            <li>Leverage nearby logistics infrastructure to attract tenants with robust operational needs</li>
-                        </ul>
-                        
-                        <h3>Tenant Pitch Strategies</h3>
-                        
-                        <div class="strategy-card">
-                            <h4>Sean Ding</h4>
-                            <p><strong>Operational Fit:</strong> Ideal for logistics with high dock count and clear height.</p>
-                            <p><strong>Competitive Edge:</strong> Flexible layout allowing adaptability for future growth.</p>
-                            <p><strong>Incentive Strategy:</strong> Offer free rent for the first three months to offset initial expenses.</p>
-                        </div>
-                        
-                        <div class="strategy-card">
-                            <h4>David Chisholm</h4>
-                            <p><strong>Operational Fit:</strong> Strong manager with experience in operations.</p>
-                            <p><strong>Competitive Edge:</strong> Proximity to logistics infrastructure supports efficiency.</p>
-                            <p><strong>Incentive Strategy:</strong> Tenant improvements up to $50,000 included in the lease.</p>
-                        </div>
-                        
-                        <div class="strategy-card">
-                            <h4>Marks Hernandez</h4>
-                            <p><strong>Operational Fit:</strong> Ideal for asset management and logistics.</p>
-                            <p><strong>Competitive Edge:</strong> Appealing location due to local manufacturing presence.</p>
-                            <p><strong>Incentive Strategy:</strong> Reduced rates for longer leases, offering stability.</p>
-                        </div>
-                        
-                        <h3>Risk Coverage Insights</h3>
-                        <ul>
-                            <li>Current coverage appears adequate; confirm specific limits</li>
-                            <li>No significant claims noted; maintain consistent review for renewals</li>
-                            <li>Ensure all tenants have provided updated COI listing landlord as additional insured</li>
-                        </ul>
-                        
-                        <h3>Local Intelligence</h3>
-                        <ul>
-                            <li>Diverse industrial workforce, skilled in logistics, manufacturing</li>
-                            <li>Majority of workforce commutes within 30 miles, providing a stable labor pool</li>
-                            <li>Proximity to logistics firms supports high demand for warehouse space</li>
-                        </ul>
-                        
-                        <p><em>This report provides an actionable strategy to drive investment and leasing decisions confidently.</em></p>
-                    </div>
-                </section>
-            </div>
-        </div>
-    </main>
-
-    <footer>
-        <div class="container">
-            <div class="footer-logo">The Analyzer</div>
-            <div class="footer-text">© 2023 Quantum IOS. All rights reserved.</div>
-        </div>
-    </footer>
-
-    <script>
+<h3>Risk Coverage Insights</h3>
+<ul>
+<li>Current coverage appears adequate; confirm specific limits</li>
+<li>No significant claims noted; maintain consistent review for renewals</li>
+<li>Ensure all tenants have provided updated COI listing landlord as additional insured</li>
+</ul>
+<h3>Local Intelligence</h3>
+<ul>
+<li>Diverse industrial workforce, skilled in logistics, manufacturing</li>
+<li>Majority of workforce commutes within 30 miles, providing a stable labor pool</li>
+<li>Proximity to logistics firms supports high demand for warehouse space</li>
+</ul>
+<p><em>This report provides an actionable strategy to drive investment and leasing decisions confidently.</em></p>
+<div class="strategy-card"><h4>Midwest Logistics Corp</h4><p>Operational Fit: Your current 3PL operations require 30' clear height and 10+ dock doors. This facility exceeds both requirements with 32' ceiling and 12 loading positions.</p><p>Competitive Edge: Located 2.3 miles from major rail intermodal facility, reducing last-mile costs by 15-20% compared to suburban alternatives.</p><p>Incentive Strategy: Propose 5-year lease with 6-month rent-free period and TI allowance of $2.50/sf for specialized racking systems.</p></div><div class="strategy-card"><h4>Aurora Manufacturing</h4><p>Operational Fit: Facility layout optimized for assembly line operations with column spacing supporting overhead crane systems.</p><p>Competitive Edge: Within 15 minutes of Ford Stamping Plant and major automotive suppliers, enabling just-in-time delivery.</p><p>Incentive Strategy: Offer build-to-suit improvements for specialized electrical requirements with 7-year lease commitment.</p></div><div class="strategy-card"><h4>ChemCore Distribution</h4><p>Operational Fit: Concrete flooring and ventilation systems meet requirements for Class 3 chemical storage and handling.</p><p>Competitive Edge: Rail spur access enables bulk chemical transportation, reducing costs by 25% vs. truck-only facilities.</p><p>Incentive Strategy: Structured lease with percentage rent option tied to throughput volumes, aligning interests for growth.</p></div></div>
+</section>
+</div>
+</div>
+</main>
+<footer>
+<div class="container">
+<div class="footer-logo">The Analyzer</div>
+<div class="footer-text">© 2023 Quantum IOS. All rights reserved.</div>
+</div>
+</footer>
+<script>
         document.addEventListener('DOMContentLoaded', function() {
             // Initialize the financial chart
             createFinancialChart([
-                {
-                    "Tenant Name": "Sean Ding",
-                    "Net Operating Income": "37500",
-                    "Estimated Cap Rate": "7.5%"
-                },
-                {
-                    "Tenant Name": "David Chisholm",
-                    "Net Operating Income": "0",
-                    "Estimated Cap Rate": "6.8%"
-                },
-                {
-                    "Tenant Name": "Marks Hernandez",
-                    "Net Operating Income": "-37500",
-                    "Estimated Cap Rate": "6.2%"
-                }
-            ]);
+            {
+                "Tenant Name": "Midwest Logistics Corp",
+                "Net Operating Income": "630000",
+                "Estimated Cap Rate": "7.2%"
+            },
+            {
+                "Tenant Name": "Aurora Manufacturing",
+                "Net Operating Income": "630000",
+                "Estimated Cap Rate": "7.2%"
+            },
+            {
+                "Tenant Name": "ChemCore Distribution",
+                "Net Operating Income": "630000",
+                "Estimated Cap Rate": "7.2%"
+            }
+        ]);
         });
 
         document.getElementById('propertyForm').addEventListener('submit', function(e) {
@@ -944,8 +824,23 @@
             document.getElementById('resultsContainer').style.display = 'block';
         });
         
-        function createFinancialChart(tenantsData) {
-            const ctx = document.getElementById('financialChart').getContext('2d');
+        function createFinancialChart([
+            {
+                "Tenant Name": "Midwest Logistics Corp",
+                "Net Operating Income": "630000",
+                "Estimated Cap Rate": "7.2%"
+            },
+            {
+                "Tenant Name": "Aurora Manufacturing",
+                "Net Operating Income": "630000",
+                "Estimated Cap Rate": "7.2%"
+            },
+            {
+                "Tenant Name": "ChemCore Distribution",
+                "Net Operating Income": "630000",
+                "Estimated Cap Rate": "7.2%"
+            }
+        ]);
             
             // Extract data for chart
             const labels = tenantsData.map(tenant => tenant["Tenant Name"]);
