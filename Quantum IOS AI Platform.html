@@ -1,0 +1,1277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quantum IOS| AI Real Estate Platform</title>
+    <meta name="description" content="AI-powered platform for industrial real estate analysis, tenant matching, and deal execution">
+    
+    <!-- Preload critical resources -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap"></noscript>
+    
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
+    
+    <!-- Inline critical CSS -->
+    <style>
+        :root {
+            --primary-dark: #0A0A0A;
+            --secondary-dark: #1A1A1A;
+            --accent-crimson: #DC143C;
+            --accent-crimson-light: #FF6B7F;
+            --text-light: #F5F5F5;
+            --text-gray: #AAAAAA;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--primary-dark);
+            color: var(--text-light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background-color: var(--secondary-dark);
+            padding: 20px 0;
+            border-bottom: 1px solid rgba(220, 20, 60, 0.2);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 40px;
+            width: 40px;
+            margin-right: 15px;
+        }
+
+        .logo-text h1 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            font-size: 24px;
+            color: var(--accent-crimson);
+            letter-spacing: 1px;
+        }
+
+        .logo-text span {
+            font-size: 12px;
+            color: var(--text-gray);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-link {
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .nav-link:hover {
+            color: var(--accent-crimson-light);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--accent-crimson);
+            transition: width 0.3s;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: linear-gradient(rgba(10, 10, 10, 0.9), rgba(10, 10, 10, 0.7)), url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80') no-repeat center center/cover;
+            position: relative;
+            padding-top: 80px;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 72px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--accent-crimson);
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 20px;
+            color: var(--text-gray);
+            margin-bottom: 40px;
+            line-height: 1.6;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            background-color: var(--accent-crimson);
+            color: var(--text-light);
+            border: none;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn:hover {
+            background-color: var(--accent-crimson-light);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .btn:active {
+            transform: translateY(-1px);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            border: 2px solid var(--accent-crimson);
+            margin-left: 15px;
+        }
+
+        .btn-outline:hover {
+            background-color: rgba(220, 20, 60, 0.1);
+        }
+
+        /* Animation styles */
+        .animate {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        .animate.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Responsive styles */
+        @media (max-width: 992px) {
+            .hero h1 {
+                font-size: 56px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero h1 {
+                font-size: 42px;
+            }
+            
+            .hero p {
+                font-size: 18px;
+            }
+            
+            .btn {
+                padding: 12px 24px;
+            }
+            
+            .btn-outline {
+                margin-left: 0;
+                margin-top: 15px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero h1 {
+                font-size: 36px;
+            }
+        }
+    </style>
+    
+    <!-- Deferred non-critical CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.css" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.css"></noscript>
+    
+    <style id="deferred-styles">
+        .section {
+            padding: 100px 0;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 48px;
+            font-weight: 700;
+            color: var(--accent-crimson);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .section-subtitle {
+            font-size: 20px;
+            color: var(--text-gray);
+            margin-bottom: 60px;
+            text-align: center;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .platforms-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .platform-card {
+            background-color: var(--secondary-dark);
+            border-radius: 8px;
+            padding: 40px 30px;
+            text-align: center;
+            transition: all 0.3s;
+            border: 1px solid rgba(220, 20, 60, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .platform-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background-color: var(--accent-crimson);
+        }
+
+        .platform-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .platform-icon {
+            font-size: 60px;
+            color: var(--accent-crimson-light);
+            margin-bottom: 20px;
+        }
+
+        .platform-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--text-light);
+        }
+
+        .platform-description {
+            color: var(--text-gray);
+            margin-bottom: 25px;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        .platform-features {
+            text-align: left;
+            margin-bottom: 25px;
+        }
+
+        .platform-feature {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 10px;
+        }
+
+        .platform-feature i {
+            color: var(--accent-crimson);
+            margin-right: 10px;
+            margin-top: 3px;
+        }
+
+        .demo-section {
+            background-color: var(--secondary-dark);
+            padding: 80px 0;
+            position: relative;
+        }
+
+        .demo-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .demo-window {
+            background-color: var(--primary-dark);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(220, 20, 60, 0.3);
+        }
+
+        .demo-header {
+            height: 40px;
+            background-color: var(--secondary-dark);
+            display: flex;
+            align-items: center;
+            padding: 0 15px;
+            border-bottom: 1px solid rgba(220, 20, 60, 0.2);
+        }
+
+        .demo-buttons {
+            display: flex;
+            gap: 8px;
+        }
+
+        .demo-button {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .demo-button.red {
+            background-color: #FF5F56;
+        }
+
+        .demo-button.yellow {
+            background-color: #FFBD2E;
+        }
+
+        .demo-button.green {
+            background-color: #27C93F;
+        }
+
+        .demo-title {
+            flex: 1;
+            text-align: center;
+            font-size: 12px;
+            color: var(--text-gray);
+        }
+
+        .demo-content {
+            height: 600px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .demo-iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .demo-nav {
+            position: absolute;
+            bottom: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+        }
+
+        .demo-nav-button {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: var(--text-gray);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .demo-nav-button.active {
+            background-color: var(--accent-crimson);
+            transform: scale(1.2);
+        }
+
+        .stats-section {
+            padding: 80px 0;
+            background: linear-gradient(rgba(10, 10, 10, 0.9), rgba(10, 10, 10, 0.9)), url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80') no-repeat center center/cover;
+            background-attachment: fixed;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .stat-card {
+            background-color: rgba(26, 26, 26, 0.8);
+            border-radius: 8px;
+            padding: 40px 30px;
+            text-align: center;
+            border: 1px solid rgba(220, 20, 60, 0.3);
+        }
+
+        .stat-value {
+            font-size: 60px;
+            font-weight: 700;
+            color: var(--accent-crimson-light);
+            margin-bottom: 10px;
+            line-height: 1;
+        }
+
+        .stat-label {
+            font-size: 18px;
+            color: var(--text-light);
+        }
+
+        .testimonials-section {
+            padding: 80px 0;
+            background-color: var(--secondary-dark);
+        }
+
+        .testimonials-slider {
+            max-width: 1000px;
+            margin: 50px auto 0;
+            position: relative;
+        }
+
+        .testimonial {
+            background-color: var(--primary-dark);
+            border-radius: 8px;
+            padding: 40px;
+            margin: 0 20px;
+            border: 1px solid rgba(220, 20, 60, 0.3);
+            position: relative;
+        }
+
+        .testimonial::before {
+            content: '"';
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-family: 'Playfair Display', serif;
+            font-size: 80px;
+            color: rgba(220, 20, 60, 0.2);
+            line-height: 1;
+        }
+
+        .testimonial-content {
+            font-size: 18px;
+            font-style: italic;
+            color: var(--text-light);
+            margin-bottom: 30px;
+            line-height: 1.6;
+            position: relative;
+            z-index: 1;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+        }
+
+        .testimonial-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: rgba(220, 20, 60, 0.2);
+            margin-right: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent-crimson);
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .testimonial-info h4 {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--text-light);
+            margin-bottom: 5px;
+        }
+
+        .testimonial-info p {
+            font-size: 14px;
+            color: var(--text-gray);
+        }
+
+        .slick-arrow {
+            width: 40px;
+            height: 40px;
+            background-color: var(--accent-crimson) !important;
+            border-radius: 50%;
+            display: flex !important;
+            align-items: center;
+            justify-content: center;
+            z-index: 1;
+            transition: all 0.3s !important;
+        }
+
+        .slick-arrow:hover {
+            background-color: var(--accent-crimson-light) !important;
+        }
+
+        .slick-prev {
+            left: -50px !important;
+        }
+
+        .slick-next {
+            right: -50px !important;
+        }
+
+        .slick-prev::before, .slick-next::before {
+            font-family: 'Font Awesome 6 Free' !important;
+            font-weight: 900 !important;
+            color: white !important;
+            font-size: 18px !important;
+            opacity: 1 !important;
+        }
+
+        .slick-prev::before {
+            content: '\f053' !important;
+        }
+
+        .slick-next::before {
+            content: '\f054' !important;
+        }
+
+        .cta-section {
+            padding: 100px 0;
+            text-align: center;
+            background: linear-gradient(rgba(10, 10, 10, 0.9), rgba(10, 10, 10, 0.9)), url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80') no-repeat center center/cover;
+        }
+
+        .cta-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 48px;
+            font-weight: 700;
+            color: var(--accent-crimson);
+            margin-bottom: 20px;
+        }
+
+        .cta-subtitle {
+            font-size: 20px;
+            color: var(--text-gray);
+            margin-bottom: 40px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: var(--secondary-dark);
+            padding: 40px;
+            border-radius: 8px;
+            border: 1px solid rgba(220, 20, 60, 0.3);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--accent-crimson-light);
+            text-align: left;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            background-color: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(220, 20, 60, 0.3);
+            border-radius: 4px;
+            color: var(--text-light);
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--accent-crimson);
+            box-shadow: 0 0 0 2px rgba(220, 20, 60, 0.2);
+        }
+
+        footer {
+            background-color: var(--secondary-dark);
+            padding: 50px 0 20px;
+            border-top: 1px solid rgba(220, 20, 60, 0.2);
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-logo {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            font-size: 24px;
+            color: var(--accent-crimson);
+            margin-bottom: 15px;
+        }
+
+        .footer-text {
+            font-size: 14px;
+            color: var(--text-gray);
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-link {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.05);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-light);
+            transition: all 0.3s;
+        }
+
+        .social-link:hover {
+            background-color: var(--accent-crimson);
+            transform: translateY(-3px);
+        }
+
+        .footer-heading {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-light);
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-link {
+            margin-bottom: 10px;
+        }
+
+        .footer-link a {
+            color: var(--text-gray);
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .footer-link a:hover {
+            color: var(--accent-crimson-light);
+            padding-left: 5px;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .copyright {
+            font-size: 12px;
+            color: var(--text-gray);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 992px) {
+            .section-title {
+                font-size: 36px;
+            }
+            
+            .demo-content {
+                height: 500px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .section {
+                padding: 70px 0;
+            }
+            
+            .section-title {
+                font-size: 32px;
+            }
+            
+            .section-subtitle {
+                font-size: 16px;
+            }
+            
+            .demo-content {
+                height: 400px;
+            }
+            
+            .testimonial {
+                padding: 30px;
+            }
+            
+            .slick-prev {
+                left: -10px !important;
+            }
+            
+            .slick-next {
+                right: -10px !important;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .platforms-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .demo-content {
+                height: 300px;
+            }
+            
+            .contact-form {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+   <header>
+    <div class="container header-content">
+        <div class="logo">
+            <img src="logo.png" alt="Quantum IOS Logo" width="40" height="40">
+            <div class="logo-text">
+                <h1>Quantum IOS</h1>
+                <span>AI Real Estate Platform</span>
+            </div>
+        </div>
+        <div class="nav-links">
+            <a href="#platforms" class="nav-link">Platforms</a>
+            <a href="#demo" class="nav-link">Demo</a>
+            <a href="#stats" class="nav-link">Results</a>
+            <a href="#testimonials" class="nav-link">Testimonials</a>
+            <a href="#contact" class="nav-link">Contact</a>
+        </div>
+    </div>
+</header>
+
+    <section class="hero">
+        <div class="hero-content animate">
+            <h1>Transform Industrial Real Estate with AI</h1>
+            <p>The most advanced AI platform for industrial property analysis, tenant matching, and deal execution. Powered by proprietary algorithms and machine learning.</p>
+            <div>
+                <a href="#demo" class="btn">View Platform Demo</a>
+                <a href="#contact" class="btn btn-outline">Request Investor Access</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="platforms" class="section">
+        <div class="container">
+            <h2 class="section-title animate">Our AI Platform Suite</h2>
+            <p class="section-subtitle animate">Four powerful tools that work together to identify, analyze, and execute on the best industrial real estate opportunities</p>
+            
+            <div class="platforms-grid">
+                <div class="platform-card animate">
+                    <div class="platform-icon">
+                        <i class="fas fa-search-dollar" aria-hidden="true"></i>
+                    </div>
+                    <h3 class="platform-name">The Analyzer</h3>
+                    <p class="platform-description">Comprehensive property analysis with our proprietary 100-point scoring model to evaluate investment potential.</p>
+                    <div class="platform-features">
+                        <div class="platform-feature">
+                            <i class="fas fa-check" aria-hidden="true"></i>
+                            <span>Detailed property valuation</span>
+                        </div>
+                        <div class="platform-feature">
+                            <i class="fas fa-check" aria-hidden="true"></i>
+                            <span>Ideal tenant identification</span>
+                        </div>
+                        <div class="platform-feature">
+                            <i class="fas fa-check" aria-hidden="true"></i>
+                            <span>Financial modeling & projections</span>
+                        </div>
+                        <div class="platform-feature">
+                            <i class="fas fa-check" aria-hidden="true"></i>
+                            <span>Custom leasing strategy</span>
+                        </div>
+                    </div>
+                    <a href="#analyzer-demo" class="btn btn-outline" style="padding: 10px 20px; font-size: 14px;">See Demo</a>
+                </div>
+                
+                <div class="platform-card animate">
+                    <div class="platform-icon">
+                        <i class="fas fa-map-marked-alt" aria-hidden="true"></i>
+                    </div>
+                    <h3 class="platform-name">The Scouter</h3>
+                    <p class="platform-description">Location intelligence platform that identifies emerging markets and undervalued properties with high growth potential.</p>
+                    <div class="platform-features">
+                        <div class="platform-feature">
+                            <i class="fas fa-check" aria-hidden="true"></i>
+                            <span>Market trend analysis</span>
+                        </div>
+                        <div class="platform-feature">
+                            <i class="fas fa-check" aria-hidden="true"></i>
+                            <span>Supply/demand forecasting</span>
+                        </div>
+                        <div class="platform-feature">
+                            <i class="fas fa-check" aria-hidden="true"></i>
+                            <span>Tenant clustering detection</span>
+                        </div>
+                        <div class="platform-feature">
+                            <i class="fas fa-check" aria-hidden="true"></i>
+                            <span>Investment recommendations</span>
+                        </div>
+                    </div>
+                    <a href="#scouter-demo" class="btn btn-outline" style="padding: 10px 20px; font-size: 14px;">See Demo</a>
+                </div>
+                
+                <div class="platform-card animate">
+                    <div class="platform-icon">
+                        <i class="fas fa-user-tie" aria-hidden="true"></i>
+                    </div>
+                    <h3 class="platform-name">The Profiler</h3>
+                    <p class="platform-description">Deep tenant intelligence with dynamic scoring to identify the highest quality tenants for your properties.</p>
+                    <div class="platform-features">
+                        <div class="platform-feature">
+                            <i class="fas fa-check" aria-hidden="true"></i>
+                            <span>Tenant financial health analysis</span>
+                        </div>
+                        <div class="platform-feature">
+                            <i class="fas fa-check" aria-hidden="true"></i>
+                            <span>Growth trajectory scoring</span>
+                        </div>
+                        <div class="platform-feature">
+                            <i class="fas fa-check" aria-hidden="true"></i>
+                            <span>Key decision maker identification</span>
+                        </div>
+                        <div class="platform-feature">
+                            <i class="fas fa-check" aria-hidden="true"></i>
+                            <span>Lease expiration tracking</span>
+                        </div>
+                    </div>
+                    <a href="#profiler-demo" class="btn btn-outline" style="padding: 10px 20px; font-size: 14px;">See Demo</a>
+                </div>
+                
+                <div class="platform-card animate">
+                    <div class="platform-icon">
+                        <i class="fas fa-file-contract" aria-hidden="true"></i>
+                    </div>
+                    <h3 class="platform-name">The Underwriter</h3>
+                    <p class="platform-description">AI-powered deal execution that optimizes terms and accelerates closings with predictive negotiation.</p>
+                    <div class="platform-features">
+                        <div class="platform-feature">
+                            <i class="fas fa-check" aria-hidden="true"></i>
+                            <span>Automated deal structuring</span>
+                        </div>
+                        <div class="platform-feature">
+                            <i class="fas fa-check" aria-hidden="true"></i>
+                            <span>Term optimization</span>
+                        </div>
+                        <div class="platform-feature">
+                            <i class="fas fa-check" aria-hidden="true"></i>
+                            <span>AI negotiation assistant</span>
+                        </div>
+                        <div class="platform-feature">
+                            <i class="fas fa-check" aria-hidden="true"></i>
+                            <span>Closing probability scoring</span>
+                        </div>
+                    </div>
+                    <a href="#underwriter-demo" class="btn btn-outline" style="padding: 10px 20px; font-size: 14px;">See Demo</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="demo" class="demo-section">
+        <div class="container">
+            <h2 class="section-title animate">Platform In Action</h2>
+            <p class="section-subtitle animate">See how our AI platform transforms industrial real estate analysis and deal execution</p>
+            
+            <div class="demo-container animate">
+                <div class="demo-window">
+                    <div class="demo-header">
+                        <div class="demo-buttons">
+                            <div class="demo-button red"></div>
+                            <div class="demo-button yellow"></div>
+                            <div class="demo-button green"></div>
+                        </div>
+                        <div class="demo-title">Quantum IOS Platform Demo</div>
+                    </div>
+                    <div class="demo-content">
+                        <iframe id="demo-iframe" class="demo-iframe" src="Quantum IOS The Analyzer.html" title="Quantum IOS Platform Demo" loading="lazy"></iframe>
+                    </div>
+                </div>
+                <div class="demo-nav">
+                    <div class="demo-nav-button active" data-src="Quantum IOS The Analyzer.html"></div>
+                    <div class="demo-nav-button" data-src="Quantum IOS The Scouter.html"></div>
+                    <div class="demo-nav-button" data-src="Quantum IOS The Profiler and The Underwriter.html#profiler"></div>
+                    <div class="demo-nav-button" data-src="Quantum IOS The Profiler and The Underwriter.html#underwriter"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="stats" class="stats-section">
+        <div class="container">
+            <h2 class="section-title animate">Proven Results</h2>
+            <p class="section-subtitle animate">Our AI platform delivers measurable advantages for industrial real estate investors</p>
+            
+            <div class="stats-grid">
+                <div class="stat-card animate">
+                    <div class="stat-value">87%</div>
+                    <div class="stat-label">Increase in deal identification speed</div>
+                </div>
+                <div class="stat-card animate">
+                    <div class="stat-value">42%</div>
+                    <div class="stat-label">Higher tenant retention rates</div>
+                </div>
+                <div class="stat-card animate">
+                    <div class="stat-value">3.2x</div>
+                    <div class="stat-label">ROI on platform investment</div>
+                </div>
+                <div class="stat-card animate">
+                    <div class="stat-value">65%</div>
+                    <div class="stat-label">Reduction in due diligence time</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="testimonials" class="testimonials-section">
+        <div class="container">
+            <h2 class="section-title animate">What Industry Leaders Say</h2>
+            <p class="section-subtitle animate">Hear from investors and operators who have transformed their business with our platform</p>
+            
+            <div class="testimonials-slider animate">
+                <div class="testimonial">
+                    <p class="testimonial-content">"Quantum IOS AI platform has fundamentally changed how we evaluate industrial properties. The Analyzer identified 3 undervalued assets in markets we had overlooked, resulting in $28M in acquisitions that have appreciated 40% in 18 months."</p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">JD</div>
+                        <div class="testimonial-info">
+                            <h4>James Donovan</h4>
+                            <p>CIO, Blackstone Industrial Partners</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial">
+                    <p class="testimonial-content">"The Profiler's tenant intelligence allowed us to proactively approach 12 companies before their leases expired. We've signed 9 renewals at 15% above market rates and placed 3 new tenants in adjacent properties."</p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">SR</div>
+                        <div class="testimonial-info">
+                            <h4>Sarah Rodriguez</h4>
+                            <p>VP Portfolio Management, Prologis</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial">
+                    <p class="testimonial-content">"We've reduced our underwriting time from 3 weeks to 4 days using The Underwriter. The AI's negotiation recommendations have increased our average NOI by 11% across the portfolio."</p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">ML</div>
+                        <div class="testimonial-info">
+                            <h4>Michael Li</h4>
+                            <p>Managing Partner, Cerberus Capital</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="cta-section">
+        <div class="container">
+            <h2 class="cta-title animate">Ready to Transform Your Portfolio?</h2>
+            <p class="cta-subtitle animate">Schedule a demo and learn how Quantum IOS AI platform can give you an unbeatable advantage in industrial real estate</p>
+            
+            <div class="contact-form animate">
+                <form id="investorForm">
+                    <div class="form-group">
+                        <label for="name">Full Name</label>
+                        <input type="text" id="name" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="company">Company</label>
+                        <input type="text" id="company" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone</label>
+                        <input type="tel" id="phone" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="interest">Primary Interest</label>
+                        <select id="interest" class="form-control" required>
+                            <option value="">Select an option</option>
+                            <option value="analyzer">The Analyzer</option>
+                            <option value="scouter">The Scouter</option>
+                            <option value="profiler">The Profiler</option>
+                            <option value="underwriter">The Underwriter</option>
+                            <option value="all">Full Platform</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn" style="width: 100%;">Request Investor Access</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-about">
+                    <div class="footer-logo">QuantumIOS</div>
+                    <p class="footer-text">The most advanced AI platform for industrial real estate analysis, tenant matching, and deal execution.</p>
+                    <div class="footer-social">
+                        <a href="#" class="social-link" aria-label="LinkedIn"><i class="fab fa-linkedin-in" aria-hidden="true"></i></a>
+                        <a href="#" class="social-link" aria-label="Twitter"><i class="fab fa-twitter" aria-hidden="true"></i></a>
+                        <a href="#" class="social-link" aria-label="Instagram"><i class="fab fa-instagram" aria-hidden="true"></i></a>
+                    </div>
+                </div>
+                <div class="footer-links-container">
+                    <h3 class="footer-heading">Platform</h3>
+                    <ul class="footer-links">
+                        <li class="footer-link"><a href="#analyzer-demo">The Analyzer</a></li>
+                        <li class="footer-link"><a href="#scouter-demo">The Scouter</a></li>
+                        <li class="footer-link"><a href="#profiler-demo">The Profiler</a></li>
+                        <li class="footer-link"><a href="#underwriter-demo">The Underwriter</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links-container">
+                    <h3 class="footer-heading">Company</h3>
+                    <ul class="footer-links">
+                        <li class="footer-link"><a href="#">About Us</a></li>
+                        <li class="footer-link"><a href="#">Team</a></li>
+                        <li class="footer-link"><a href="#">Careers</a></li>
+                        <li class="footer-link"><a href="#">Press</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links-container">
+                    <h3 class="footer-heading">Resources</h3>
+                    <ul class="footer-links">
+                        <li class="footer-link"><a href="#">Case Studies</a></li>
+                        <li class="footer-link"><a href="#">Research</a></li>
+                        <li class="footer-link"><a href="#">Blog</a></li>
+                        <li class="footer-link"><a href="#">FAQ</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p class="copyright">© 2023 Quantum IOS. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Deferred JavaScript -->
+    <script>
+        // Load non-critical JS after page load
+        function loadDeferredResources() {
+            // Load jQuery
+            const jqueryScript = document.createElement('script');
+            jqueryScript.src = 'https://code.jquery.com/jquery-3.6.0.min.js';
+            jqueryScript.onload = function() {
+                // Load Slick slider after jQuery is loaded
+                const slickScript = document.createElement('script');
+                slickScript.src = 'https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js';
+                document.body.appendChild(slickScript);
+                
+                // Initialize slider when both are loaded
+                slickScript.onload = initializeSlider;
+            };
+            document.body.appendChild(jqueryScript);
+            
+            // Load deferred CSS
+            const deferredStyles = document.getElementById('deferred-styles');
+            if (deferredStyles) {
+                const head = document.head;
+                head.appendChild(deferredStyles);
+            }
+        }
+        
+        // Initialize testimonial slider
+        function initializeSlider() {
+            if (typeof jQuery !== 'undefined' && typeof jQuery.fn.slick !== 'undefined') {
+                jQuery('.testimonials-slider').slick({
+                    dots: false,
+                    infinite: true,
+                    speed: 300,
+                    slidesToShow: 1,
+                    adaptiveHeight: true,
+                    prevArrow: '<button type="button" class="slick-prev" aria-label="Previous testimonial">Previous</button>',
+                    nextArrow: '<button type="button" class="slick-next" aria-label="Next testimonial">Next</button>'
+                });
+            }
+        }
+        
+        // Initialize demo navigation
+        function initDemoNavigation() {
+            document.querySelectorAll('.demo-nav-button').forEach(button => {
+                button.addEventListener('click', function() {
+                    const src = this.getAttribute('data-src');
+                    document.getElementById('demo-iframe').src = src;
+                    
+                    // Update active button
+                    document.querySelectorAll('.demo-nav-button').forEach(btn => {
+                        btn.classList.remove('active');
+                    });
+                    this.classList.add('active');
+                });
+            });
+            
+            // Platform demo links
+            document.querySelectorAll('[href^="#"]').forEach(link => {
+                if (link.getAttribute('href').includes('-demo')) {
+                    link.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        const platform = this.getAttribute('href').replace('#', '').replace('-demo', '');
+                        let src = '';
+                        
+                        switch(platform) {
+                            case 'analyzer':
+                                src = 'Quantum IOS The Analyzer.html';
+                                break;
+                            case 'scouter':
+                                src = 'Quantum IOS The Scouter.html';
+                                break;
+                            case 'profiler':
+                                src = 'Quantum IOS The Profiler and The Underwriter.html#profiler';
+                                break;
+                            case 'underwriter':
+                                src = 'Quantum IOS The Profiler and The Underwriter.html#underwriter';
+                                break;
+                        }
+                        
+                        document.getElementById('demo-iframe').src = src;
+                        
+                        // Update active button
+                        document.querySelectorAll('.demo-nav-button').forEach(btn => {
+                            btn.classList.remove('active');
+                            if (btn.getAttribute('data-src') === src) {
+                                btn.classList.add('active');
+                            }
+                        });
+                        
+                        // Scroll to demo section
+                        document.getElementById('demo').scrollIntoView({ behavior: 'smooth' });
+                    });
+                }
+            });
+        }
+        
+        // Initialize scroll animations
+        function initScrollAnimations() {
+            const animateElements = document.querySelectorAll('.animate');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('show');
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+            
+            animateElements.forEach(element => {
+                observer.observe(element);
+            });
+        }
+        
+        // Initialize smooth scrolling
+        function initSmoothScrolling() {
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    if (this.getAttribute('href') !== '#') {
+                        e.preventDefault();
+                        
+                        const targetId = this.getAttribute('href');
+                        if (targetId === '#') return;
+                        
+                        const targetElement = document.querySelector(targetId);
+                        if (targetElement) {
+                            targetElement.scrollIntoView({
+                                behavior: 'smooth'
+                            });
+                        }
+                    }
+                });
+            });
+        }
+        
+        // Initialize form submission
+        function initFormSubmission() {
+            const form = document.getElementById('investorForm');
+            if (form) {
+                form.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    alert('Thank you for your interest! Our team will contact you shortly to schedule a demo.');
+                    this.reset();
+                });
+            }
+        }
+        
+        // Run when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            initDemoNavigation();
+            initScrollAnimations();
+            initSmoothScrolling();
+            initFormSubmission();
+            
+            // Load deferred resources after a short delay
+            setTimeout(loadDeferredResources, 500);
+        });
+    </script>
+</body>
+</html>
