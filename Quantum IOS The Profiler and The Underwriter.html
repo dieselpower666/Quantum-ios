@@ -1,0 +1,2036 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quantum IOS | AI Deal Platform</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --primary-dark: #0A0A0A;
+            --secondary-dark: #1A1A1A;
+            --accent-crimson: #D4AF37; /* Gold */
+            --accent-crimson-light: #FFD700; /* Light Gold */
+            --text-light: #F5F5F5;
+            --text-gray: #AAAAAA;
+            --success: #28A745;
+            --warning: #FFC107;
+            --danger: #DC3545;
+            --info: #17A2B8;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--primary-dark);
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background-color: var(--secondary-dark);
+            padding: 20px 0;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 40px;
+            margin-right: 15px;
+        }
+
+        .logo-text h1 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            font-size: 24px;
+            color: var(--accent-crimson);
+            letter-spacing: 1px;
+        }
+
+        .logo-text span {
+            font-size: 12px;
+            color: var(--text-gray);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .main {
+            padding: 40px 0;
+        }
+
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .dashboard-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--accent-crimson);
+        }
+
+        .dashboard-subtitle {
+            color: var(--text-gray);
+            font-size: 16px;
+            margin-top: 5px;
+        }
+
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+            margin-bottom: 30px;
+        }
+
+        .tab {
+            padding: 12px 24px;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--text-gray);
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .tab.active {
+            color: var(--accent-crimson);
+            border-bottom: 3px solid var(--accent-crimson);
+        }
+
+        .tab:hover:not(.active) {
+            color: var(--accent-crimson-light);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .card {
+            background-color: var(--secondary-dark);
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+        }
+
+        .card-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 22px;
+            font-weight: 600;
+            color: var(--accent-crimson-light);
+        }
+
+        .card-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            padding: 8px 16px;
+            background-color: var(--accent-crimson);
+            color: var(--text-light);
+            border: none;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn i {
+            font-size: 14px;
+        }
+
+        .btn:hover {
+            background-color: var(--accent-crimson-light);
+            transform: translateY(-2px);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            border: 1px solid var(--accent-crimson);
+        }
+
+        .btn-outline:hover {
+            background-color: rgba(212, 175, 55, 0.1);
+        }
+
+        .btn-success {
+            background-color: var(--success);
+        }
+
+        .btn-success:hover {
+            background-color: #218838;
+        }
+
+        .btn-warning {
+            background-color: var(--warning);
+            color: #212529;
+        }
+
+        .btn-warning:hover {
+            background-color: #e0a800;
+        }
+
+        .btn-info {
+            background-color: var(--info);
+        }
+
+        .btn-info:hover {
+            background-color: #138496;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background-color: rgba(255, 255, 255, 0.03);
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid var(--accent-crimson);
+        }
+
+        .stat-title {
+            font-size: 14px;
+            color: var(--text-gray);
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .stat-value {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--accent-crimson-light);
+            margin-bottom: 5px;
+        }
+
+        .stat-change {
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .stat-change.positive {
+            color: var(--success);
+        }
+
+        .stat-change.negative {
+            color: var(--danger);
+        }
+
+        .stat-change.neutral {
+            color: var(--warning);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        th {
+            background-color: rgba(212, 175, 55, 0.1);
+            color: var(--accent-crimson-light);
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 12px;
+            letter-spacing: 1px;
+        }
+
+        tr:hover {
+            background-color: rgba(212, 175, 55, 0.03);
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .badge-success {
+            background-color: rgba(40, 167, 69, 0.2);
+            color: #28A745;
+        }
+
+        .badge-warning {
+            background-color: rgba(255, 193, 7, 0.2);
+            color: #FFC107;
+        }
+
+        .badge-danger {
+            background-color: rgba(220, 53, 69, 0.2);
+            color: #DC3545;
+        }
+
+        .badge-info {
+            background-color: rgba(23, 162, 184, 0.2);
+            color: #17A2B8;
+        }
+
+        .badge-primary {
+            background-color: rgba(212, 175, 55, 0.2);
+            color: var(--accent-crimson);
+        }
+
+        .profile-header {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .profile-logo {
+            width: 120px;
+            height: 120px;
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+        }
+
+        .profile-logo i {
+            font-size: 40px;
+            color: var(--accent-crimson-light);
+        }
+
+        .profile-info {
+            flex: 1;
+        }
+
+        .profile-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--accent-crimson-light);
+            margin-bottom: 5px;
+        }
+
+        .profile-meta {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+
+        .profile-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            color: var(--text-gray);
+        }
+
+        .profile-meta-item i {
+            color: var(--accent-crimson);
+        }
+
+        .profile-score {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .score-circle {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: conic-gradient(var(--accent-crimson) 0% 75%, rgba(212, 175, 55, 0.2) 75% 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .score-circle-inner {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background-color: var(--secondary-dark);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 24px;
+            color: var(--accent-crimson-light);
+        }
+
+        .score-details {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .score-label {
+            font-size: 14px;
+            color: var(--text-gray);
+        }
+
+        .score-value {
+            font-weight: 600;
+            color: var(--accent-crimson-light);
+        }
+
+        .tabs-vertical {
+            display: flex;
+            gap: 30px;
+        }
+
+        .sidebar-tabs {
+            width: 250px;
+            flex-shrink: 0;
+        }
+
+        .sidebar-tab {
+            padding: 12px 15px;
+            cursor: pointer;
+            border-left: 3px solid transparent;
+            color: var(--text-gray);
+            font-weight: 500;
+            transition: all 0.3s;
+            margin-bottom: 5px;
+            border-radius: 0 4px 4px 0;
+        }
+
+        .sidebar-tab.active {
+            border-left: 3px solid var(--accent-crimson);
+            background-color: rgba(212, 175, 55, 0.05);
+            color: var(--accent-crimson-light);
+        }
+
+        .sidebar-tab:hover:not(.active) {
+            background-color: rgba(255, 255, 255, 0.03);
+            color: var(--text-light);
+        }
+
+        .tab-content-vertical {
+            flex: 1;
+        }
+
+        .html-content h1, 
+        .html-content h2, 
+        .html-content h3, 
+        .html-content h4, 
+        .html-content h5, 
+        .html-content h6 {
+            color: var(--accent-crimson-light);
+            margin: 15px 0 10px;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .html-content h1 {
+            font-size: 24px;
+        }
+
+        .html-content h2 {
+            font-size: 20px;
+        }
+
+        .html-content h3 {
+            font-size: 18px;
+        }
+
+        .html-content p {
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+
+        .html-content ul, 
+        .html-content ol {
+            margin: 15px 0;
+            padding-left: 20px;
+        }
+
+        .html-content li {
+            margin-bottom: 8px;
+        }
+
+        .html-content table {
+            width: 100%;
+            margin: 20px 0;
+            border-collapse: collapse;
+        }
+
+        .html-content th, 
+        .html-content td {
+            padding: 12px 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .html-content th {
+            background-color: rgba(212, 175, 55, 0.1);
+            color: var(--accent-crimson-light);
+        }
+
+        .html-content tr:nth-child(even) {
+            background-color: rgba(255, 255, 255, 0.03);
+        }
+
+        .timeline {
+            position: relative;
+            padding-left: 30px;
+            margin: 20px 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 10px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background-color: rgba(212, 175, 55, 0.3);
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-bottom: 20px;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -30px;
+            top: 5px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: var(--accent-crimson);
+        }
+
+        .timeline-date {
+            font-size: 12px;
+            color: var(--text-gray);
+            margin-bottom: 5px;
+        }
+
+        .timeline-content {
+            background-color: rgba(255, 255, 255, 0.03);
+            padding: 15px;
+            border-radius: 4px;
+            border-left: 3px solid var(--accent-crimson);
+        }
+
+        .contact-card {
+            background-color: rgba(255, 255, 255, 0.03);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-left: 4px solid var(--accent-crimson);
+        }
+
+        .contact-name {
+            font-weight: 600;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .contact-title {
+            color: var(--text-gray);
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .contact-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .contact-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+        }
+
+        .contact-meta-item i {
+            color: var(--accent-crimson);
+            width: 16px;
+            text-align: center;
+        }
+
+        .deal-card {
+            background-color: rgba(255, 255, 255, 0.03);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-left: 4px solid var(--accent-crimson);
+            position: relative;
+        }
+
+        .deal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+
+        .deal-title {
+            font-weight: 600;
+            font-size: 18px;
+            color: var(--accent-crimson-light);
+        }
+
+        .deal-status {
+            font-size: 12px;
+            padding: 4px 8px;
+            border-radius: 4px;
+            background-color: rgba(212, 175, 55, 0.2);
+            color: var(--accent-crimson);
+        }
+
+        .deal-property {
+            color: var(--text-gray);
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+
+        .deal-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-top: 15px;
+        }
+
+        .deal-meta-item {
+            min-width: 120px;
+        }
+
+        .deal-meta-label {
+            font-size: 12px;
+            color: var(--text-gray);
+            margin-bottom: 5px;
+            text-transform: uppercase;
+        }
+
+        .deal-meta-value {
+            font-weight: 500;
+        }
+
+        .deal-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .comms-log {
+            margin-top: 30px;
+        }
+
+        .comms-item {
+            background-color: rgba(255, 255, 255, 0.03);
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-left: 3px solid var(--accent-crimson);
+        }
+
+        .comms-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .comms-method {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+            color: var(--accent-crimson-light);
+        }
+
+        .comms-date {
+            font-size: 12px;
+            color: var(--text-gray);
+        }
+
+        .comms-content {
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .comms-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .documents-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .document-card {
+            background-color: rgba(255, 255, 255, 0.03);
+            border-radius: 8px;
+            padding: 20px;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            transition: all 0.3s;
+        }
+
+        .document-card:hover {
+            background-color: rgba(212, 175, 55, 0.05);
+            transform: translateY(-3px);
+        }
+
+        .document-icon {
+            font-size: 40px;
+            color: var(--accent-crimson-light);
+            margin-bottom: 15px;
+        }
+
+        .document-name {
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .document-meta {
+            font-size: 12px;
+            color: var(--text-gray);
+            margin-bottom: 15px;
+        }
+
+        .document-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--accent-crimson-light);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            background-color: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 4px;
+            color: var(--text-light);
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--accent-crimson);
+            box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.2);
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 40px;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid rgba(212, 175, 55, 0.2);
+            border-top-color: var(--accent-crimson);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        footer {
+            background-color: var(--secondary-dark);
+            padding: 30px 0;
+            text-align: center;
+            border-top: 1px solid rgba(212, 175, 55, 0.2);
+            margin-top: 50px;
+        }
+
+        .footer-logo {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            font-size: 20px;
+            color: var(--accent-crimson);
+            margin-bottom: 10px;
+        }
+
+        .footer-text {
+            font-size: 12px;
+            color: var(--text-gray);
+        }
+
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            overflow-y: auto;
+        }
+
+        .modal-content {
+            background-color: var(--secondary-dark);
+            margin: 50px auto;
+            max-width: 800px;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--accent-crimson);
+            position: relative;
+        }
+
+        .modal-header {
+            padding: 20px;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 24px;
+            color: var(--accent-crimson-light);
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            color: var(--text-gray);
+            font-size: 24px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .modal-close:hover {
+            color: var(--accent-crimson);
+        }
+
+        .modal-body {
+            padding: 20px;
+        }
+
+        .modal-footer {
+            padding: 20px;
+            border-top: 1px solid rgba(212, 175, 55, 0.3);
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .profile-header {
+                flex-direction: column;
+            }
+            
+            .profile-logo {
+                width: 100px;
+                height: 100px;
+                margin-bottom: 20px;
+            }
+            
+            .tabs-vertical {
+                flex-direction: column;
+            }
+            
+            .sidebar-tabs {
+                width: 100%;
+                display: flex;
+                overflow-x: auto;
+                padding-bottom: 10px;
+                margin-bottom: 20px;
+            }
+            
+            .sidebar-tab {
+                white-space: nowrap;
+                border-left: none;
+                border-bottom: 3px solid transparent;
+                margin-bottom: 0;
+                margin-right: 10px;
+            }
+            
+            .sidebar-tab.active {
+                border-left: none;
+                border-bottom: 3px solid var(--accent-crimson);
+            }
+            
+            .grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .deal-meta {
+                grid-template-columns: 1fr;
+            }
+            
+            .documents-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+     <header>
+  <div class="container header-content">
+    <div class="logo">
+      <img src="logo.png" alt="Quantum IOS Logo" width="40" height="40" />
+      <div class="logo-text">
+        <h1>The Profiler & The Underwriter</h1>
+        <span>Quantum IOS</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+    <main class="main">
+        <div class="container">
+            <div class="dashboard-header">
+                <div>
+                    <h1 class="dashboard-title">The Profiler & The Underwriter</h1>
+                    <p class="dashboard-subtitle">Automated tenant intelligence and AI-powered deal closing</p>
+                </div>
+                <div>
+                    <button class="btn" id="refreshData">
+                        <i class="fas fa-sync-alt"></i> Refresh Data
+                    </button>
+                </div>
+            </div>
+
+            <div class="tabs">
+                <div class="tab active" data-tab="profiler">The Profiler</div>
+                <div class="tab" data-tab="underwriter">The Underwriter</div>
+                <div class="tab" data-tab="analytics">Analytics</div>
+            </div>
+
+            <!-- The Profiler Tab -->
+            <div class="tab-content active" id="profiler">
+                <div class="grid">
+                    <div class="stat-card">
+                        <div class="stat-title">Active Tenant Profiles</div>
+                        <div class="stat-value">142</div>
+                        <div class="stat-change positive">
+                            <i class="fas fa-arrow-up"></i> 12% from last month
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-title">High Potential Tenants</div>
+                        <div class="stat-value">38</div>
+                        <div class="stat-change positive">
+                            <i class="fas fa-arrow-up"></i> 5 new this week
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-title">Profiles Updated Today</div>
+                        <div class="stat-value">27</div>
+                        <div class="stat-change neutral">
+                            <i class="fas fa-minus"></i> Same as yesterday
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-title">Data Sources Active</div>
+                        <div class="stat-value">8/8</div>
+                        <div class="stat-change positive">
+                            <i class="fas fa-check"></i> All systems operational
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">Tenant Profiles</h2>
+                        <div class="card-actions">
+                            <button class="btn btn-outline" id="filterTenants">
+                                <i class="fas fa-filter"></i> Filter
+                            </button>
+                            <button class="btn" id="addTenant">
+                                <i class="fas fa-plus"></i> Add Tenant
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Tenant</th>
+                                <th>Industry</th>
+                                <th>HQ Location</th>
+                                <th>Score</th>
+                                <th>Last Updated</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <div style="display: flex; align-items: center; gap: 10px;">
+                                        <div style="width: 30px; height: 30px; background-color: rgba(212, 175, 55, 0.2); border-radius: 4px; display: flex; align-items: center; justify-content: center;">
+                                            <i class="fas fa-building" style="color: var(--accent-crimson); font-size: 14px;"></i>
+                                        </div>
+                                        <div>TechNova Solutions</div>
+                                    </div>
+                                </td>
+                                <td>Technology</td>
+                                <td>San Francisco, CA</td>
+                                <td>
+                                    <div class="badge badge-success">87</div>
+                                </td>
+                                <td>Today, 09:42</td>
+                                <td>
+                                    <button class="btn btn-outline" style="padding: 5px 10px; font-size: 12px;">
+                                        <i class="fas fa-eye"></i> View
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div style="display: flex; align-items: center; gap: 10px;">
+                                        <div style="width: 30px; height: 30px; background-color: rgba(212, 175, 55, 0.2); border-radius: 4px; display: flex; align-items: center; justify-content: center;">
+                                            <i class="fas fa-building" style="color: var(--accent-crimson); font-size: 14px;"></i>
+                                        </div>
+                                        <div>UrbanEats Delivery</div>
+                                    </div>
+                                </td>
+                                <td>Food Delivery</td>
+                                <td>New York, NY</td>
+                                <td>
+                                    <div class="badge badge-success">92</div>
+                                </td>
+                                <td>Today, 07:15</td>
+                                <td>
+                                    <button class="btn btn-outline" style="padding: 5px 10px; font-size: 12px;">
+                                        <i class="fas fa-eye"></i> View
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div style="display: flex; align-items: center; gap: 10px;">
+                                        <div style="width: 30px; height: 30px; background-color: rgba(212, 175, 55, 0.2); border-radius: 4px; display: flex; align-items: center; justify-content: center;">
+                                            <i class="fas fa-building" style="color: var(--accent-crimson); font-size: 14px;"></i>
+                                        </div>
+                                        <div>GreenLife Organics</div>
+                                    </div>
+                                </td>
+                                <td>Retail</td>
+                                <td>Austin, TX</td>
+                                <td>
+                                    <div class="badge badge-warning">65</div>
+                                </td>
+                                <td>Yesterday, 14:30</td>
+                                <td>
+                                    <button class="btn btn-outline" style="padding: 5px 10px; font-size: 12px;">
+                                        <i class="fas fa-eye"></i> View
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div style="display: flex; align-items: center; gap: 10px;">
+                                        <div style="width: 30px; height: 30px; background-color: rgba(212, 175, 55, 0.2); border-radius: 4px; display: flex; align-items: center; justify-content: center;">
+                                            <i class="fas fa-building" style="color: var(--accent-crimson); font-size: 14px;"></i>
+                                        </div>
+                                        <div>MediCare Plus</div>
+                                    </div>
+                                </td>
+                                <td>Healthcare</td>
+                                <td>Chicago, IL</td>
+                                <td>
+                                    <div class="badge badge-success">78</div>
+                                </td>
+                                <td>Yesterday, 11:20</td>
+                                <td>
+                                    <button class="btn btn-outline" style="padding: 5px 10px; font-size: 12px;">
+                                        <i class="fas fa-eye"></i> View
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div style="display: flex; align-items: center; gap: 10px;">
+                                        <div style="width: 30px; height: 30px; background-color: rgba(212, 175, 55, 0.2); border-radius: 4px; display: flex; align-items: center; justify-content: center;">
+                                            <i class="fas fa-building" style="color: var(--accent-crimson); font-size: 14px;"></i>
+                                        </div>
+                                        <div>Swift Logistics</div>
+                                    </div>
+                                </td>
+                                <td>Logistics</td>
+                                <td>Dallas, TX</td>
+                                <td>
+                                    <div class="badge badge-danger">42</div>
+                                </td>
+                                <td>2 days ago</td>
+                                <td>
+                                    <button class="btn btn-outline" style="padding: 5px 10px; font-size: 12px;">
+                                        <i class="fas fa-eye"></i> View
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Tenant Detail View (hidden by default) -->
+                <div id="tenantDetail" style="display: none;">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="card-title">Tenant Profile</h2>
+                            <div class="card-actions">
+                                <button class="btn btn-outline" id="backToList">
+                                    <i class="fas fa-arrow-left"></i> Back to List
+                                </button>
+                                <button class="btn">
+                                    <i class="fas fa-file-pdf"></i> Export PDF
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="profile-header">
+                            <div class="profile-logo">
+                                <i class="fas fa-building"></i>
+                            </div>
+                            <div class="profile-info">
+                                <h1 class="profile-name">TechNova Solutions</h1>
+                                <div class="profile-meta">
+                                    <div class="profile-meta-item">
+                                        <i class="fas fa-industry"></i>
+                                        <span>Technology - Software Development</span>
+                                    </div>
+                                    <div class="profile-meta-item">
+                                        <i class="fas fa-map-marker-alt"></i>
+                                        <span>San Francisco, CA</span>
+                                    </div>
+                                    <div class="profile-meta-item">
+                                        <i class="fas fa-users"></i>
+                                        <span>1,250 Employees</span>
+                                    </div>
+                                    <div class="profile-meta-item">
+                                        <i class="fas fa-calendar-alt"></i>
+                                        <span>Founded: 2015</span>
+                                    </div>
+                                </div>
+                                <div class="profile-score">
+                                    <div class="score-circle">
+                                        <div class="score-circle-inner">87</div>
+                                    </div>
+                                    <div class="score-details">
+                                        <div class="score-label">Leasing Suitability</div>
+                                        <div class="score-value">92% <span class="badge badge-success">High</span></div>
+                                        <div class="score-label">Financial Strength</div>
+                                        <div class="score-value">85% <span class="badge badge-success">Strong</span></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="tabs-vertical">
+                            <div class="sidebar-tabs">
+                                <div class="sidebar-tab active" data-tab="overview">Overview</div>
+                                <div class="sidebar-tab" data-tab="financials">Financials</div>
+                                <div class="sidebar-tab" data-tab="contacts">Key Contacts</div>
+                                <div class="sidebar-tab" data-tab="activity">Activity</div>
+                                <div class="sidebar-tab" data-tab="documents">Documents</div>
+                            </div>
+                            <div class="tab-content-vertical">
+                                <div class="tab-content-vertical active" id="overview">
+                                    <div class="html-content">
+                                        <h2>Company Overview</h2>
+                                        <p>TechNova Solutions is a rapidly growing SaaS company specializing in enterprise productivity software. The company has shown consistent 30% YoY growth for the past 3 years and recently secured $50M in Series C funding to expand operations.</p>
+                                        
+                                        <h3>Recent Developments</h3>
+                                        <ul>
+                                            <li>Announced expansion into European markets (May 2023)</li>
+                                            <li>Hired new CFO from Fortune 500 tech company (April 2023)</li>
+                                            <li>Secured partnership with major cloud provider (March 2023)</li>
+                                        </ul>
+                                        
+                                        <h3>AI Scoring Breakdown</h3>
+                                        <table>
+                                            <thead>
+                                                <tr>
+                                                    <th>Factor</th>
+                                                    <th>Score</th>
+                                                    <th>Confidence</th>
+                                                    <th>Trend</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>Growth Potential</td>
+                                                    <td>94</td>
+                                                    <td>High</td>
+                                                    <td><i class="fas fa-arrow-up text-success"></i> Up 5%</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Financial Stability</td>
+                                                    <td>88</td>
+                                                    <td>High</td>
+                                                    <td><i class="fas fa-arrow-up text-success"></i> Up 3%</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Lease Likelihood</td>
+                                                    <td>82</td>
+                                                    <td>Medium</td>
+                                                    <td><i class="fas fa-arrow-up text-success"></i> Up 7%</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Market Position</td>
+                                                    <td>90</td>
+                                                    <td>High</td>
+                                                    <td><i class="fas fa-minus text-warning"></i> Stable</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                
+                                <div class="tab-content-vertical" id="financials">
+                                    <div class="html-content">
+                                        <h2>Financial Analysis</h2>
+                                        <p>TechNova has demonstrated strong financial performance with consistent revenue growth and manageable burn rate despite aggressive expansion.</p>
+                                        
+                                        <h3>Key Metrics</h3>
+                                        <div class="grid" style="grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); margin-bottom: 20px;">
+                                            <div class="stat-card">
+                                                <div class="stat-title">Annual Revenue</div>
+                                                <div class="stat-value">$120M</div>
+                                                <div class="stat-change positive">
+                                                    <i class="fas fa-arrow-up"></i> 32% YoY
+                                                </div>
+                                            </div>
+                                            <div class="stat-card">
+                                                <div class="stat-title">Runway</div>
+                                                <div class="stat-value">24 mos</div>
+                                                <div class="stat-change positive">
+                                                    <i class="fas fa-arrow-up"></i> 8 mos
+                                                </div>
+                                            </div>
+                                            <div class="stat-card">
+                                                <div class="stat-title">Valuation</div>
+                                                <div class="stat-value">$1.2B</div>
+                                                <div class="stat-change positive">
+                                                    <i class="fas fa-arrow-up"></i> 20%
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <h3>Funding History</h3>
+                                        <div class="timeline">
+                                            <div class="timeline-item">
+                                                <div class="timeline-date">May 2023 - Series C</div>
+                                                <div class="timeline-content">
+                                                    <strong>$50M</strong> led by Sequoia Capital<br>
+                                                    Post-money valuation: $1.2B
+                                                </div>
+                                            </div>
+                                            <div class="timeline-item">
+                                                <div class="timeline-date">March 2021 - Series B</div>
+                                                <div class="timeline-content">
+                                                    <strong>$30M</strong> led by Andreessen Horowitz<br>
+                                                    Post-money valuation: $400M
+                                                </div>
+                                            </div>
+                                            <div class="timeline-item">
+                                                <div class="timeline-date">June 2019 - Series A</div>
+                                                <div class="timeline-content">
+                                                    <strong>$12M</strong> led by Y Combinator<br>
+                                                    Post-money valuation: $60M
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <h3>Revenue Projection</h3>
+                                        <div class="chart-container">
+                                            <canvas id="revenueChart"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="tab-content-vertical" id="contacts">
+                                    <h2>Key Contacts</h2>
+                                    <p>Identified decision makers and influencers at TechNova Solutions.</p>
+                                    
+                                    <div class="contact-card">
+                                        <div class="contact-name">
+                                            <span>Sarah Johnson</span>
+                                            <span class="badge badge-primary">Primary</span>
+                                        </div>
+                                        <div class="contact-title">Chief Financial Officer</div>
+                                        <div class="contact-meta">
+                                            <div class="contact-meta-item">
+                                                <i class="fas fa-phone"></i>
+                                                <span>(415) 555-0192</span>
+                                            </div>
+                                            <div class="contact-meta-item">
+                                                <i class="fas fa-envelope"></i>
+                                                <span>sjohnson@technova.com</span>
+                                            </div>
+                                            <div class="contact-meta-item">
+                                                <i class="fas fa-link"></i>
+                                                <span>LinkedIn Profile</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="contact-card">
+                                        <div class="contact-name">
+                                            <span>Michael Chen</span>
+                                            <span class="badge badge-info">Secondary</span>
+                                        </div>
+                                        <div class="contact-title">VP of Operations</div>
+                                        <div class="contact-meta">
+                                            <div class="contact-meta-item">
+                                                <i class="fas fa-phone"></i>
+                                                <span>(415) 555-0187</span>
+                                            </div>
+                                            <div class="contact-meta-item">
+                                                <i class="fas fa-envelope"></i>
+                                                <span>mchen@technova.com</span>
+                                            </div>
+                                            <div class="contact-meta-item">
+                                                <i class="fas fa-link"></i>
+                                                <span>LinkedIn Profile</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="contact-card">
+                                        <div class="contact-name">
+                                            <span>David Rodriguez</span>
+                                            <span class="badge badge-info">Secondary</span>
+                                        </div>
+                                        <div class="contact-title">Director of Facilities</div>
+                                        <div class="contact-meta">
+                                            <div class="contact-meta-item">
+                                                <i class="fas fa-phone"></i>
+                                                <span>(415) 555-0214</span>
+                                            </div>
+                                            <div class="contact-meta-item">
+                                                <i class="fas fa-envelope"></i>
+                                                <span>drodriguez@technova.com</span>
+                                            </div>
+                                            <div class="contact-meta-item">
+                                                <i class="fas fa-link"></i>
+                                                <span>LinkedIn Profile</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <button class="btn" style="margin-top: 20px;">
+                                        <i class="fas fa-sync-alt"></i> Refresh Contact Data
+                                    </button>
+                                </div>
+                                
+                                <div class="tab-content-vertical" id="activity">
+                                    <h2>Recent Activity</h2>
+                                    <p>Tracked events and updates related to TechNova Solutions.</p>
+                                    
+                                    <div class="timeline">
+                                        <div class="timeline-item">
+                                            <div class="timeline-date">Today, 09:42</div>
+                                            <div class="timeline-content">
+                                                <strong>AI Profile Update</strong><br>
+                                                Company score increased from 85 to 87 due to positive earnings report
+                                            </div>
+                                        </div>
+                                        <div class="timeline-item">
+                                            <div class="timeline-date">Yesterday, 14:30</div>
+                                            <div class="timeline-content">
+                                                <strong>News Alert</strong><br>
+                                                TechNova announced partnership with major European distributor
+                                            </div>
+                                        </div>
+                                        <div class="timeline-item">
+                                            <div class="timeline-date">2 days ago</div>
+                                            <div class="timeline-content">
+                                                <strong>Contact Update</strong><br>
+                                                New CFO contact information added to profile
+                                            </div>
+                                        </div>
+                                        <div class="timeline-item">
+                                            <div class="timeline-date">3 days ago</div>
+                                            <div class="timeline-content">
+                                                <strong>Financial Update</strong><br>
+                                                Q2 earnings report processed - revenue up 32% YoY
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="tab-content-vertical" id="documents">
+                                    <h2>Company Documents</h2>
+                                    <p>Collected documents and reports related to TechNova Solutions.</p>
+                                    
+                                    <div class="documents-grid">
+                                        <div class="document-card">
+                                            <div class="document-icon">
+                                                <i class="fas fa-file-alt"></i>
+                                            </div>
+                                            <div class="document-name">2023 Q2 Earnings Report</div>
+                                            <div class="document-meta">
+                                                <div>Added: Today, 09:42</div>
+                                                <div>Source: SEC Filings</div>
+                                            </div>
+                                            <div class="document-actions">
+                                                <button class="btn btn-outline" style="padding: 5px 10px;">
+                                                    <i class="fas fa-eye"></i> View
+                                                </button>
+                                                <button class="btn btn-outline" style="padding: 5px 10px;">
+                                                    <i class="fas fa-download"></i> Download
+                                                </button>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="document-card">
+                                            <div class="document-icon">
+                                                <i class="fas fa-file-pdf"></i>
+                                            </div>
+                                            <div class="document-name">Series C Funding Announcement</div>
+                                            <div class="document-meta">
+                                                <div>Added: 1 week ago</div>
+                                                <div>Source: Company Press Release</div>
+                                            </div>
+                                            <div class="document-actions">
+                                                <button class="btn btn-outline" style="padding: 5px 10px;">
+                                                    <i class="fas fa-eye"></i> View
+                                                </button>
+                                                <button class="btn btn-outline" style="padding: 5px 10px;">
+                                                    <i class="fas fa-download"></i> Download
+                                                </button>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="document-card">
+                                            <div class="document-icon">
+                                                <i class="fas fa-file-contract"></i>
+                                            </div>
+                                            <div class="document-name">Current Lease Agreement</div>
+                                            <div class="document-meta">
+                                                <div>Added: 2 weeks ago</div>
+                                                <div>Source: Public Records</div>
+                                            </div>
+                                            <div class="document-actions">
+                                                <button class="btn btn-outline" style="padding: 5px 10px;">
+                                                    <i class="fas fa-eye"></i> View
+                                                </button>
+                                                <button class="btn btn-outline" style="padding: 5px 10px;">
+                                                    <i class="fas fa-download"></i> Download
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- The Underwriter Tab -->
+            <div class="tab-content" id="underwriter">
+                <div class="grid">
+                    <div class="stat-card">
+                        <div class="stat-title">Active Deals</div>
+                        <div class="stat-value">18</div>
+                        <div class="stat-change positive">
+                            <i class="fas fa-arrow-up"></i> 3 new this week
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-title">Deals Closed (MTD)</div>
+                        <div class="stat-value">5</div>
+                        <div class="stat-change positive">
+                            <i class="fas fa-arrow-up"></i> 25% from last month
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-title">Avg Time to Close</div>
+                        <div class="stat-value">14d</div>
+                        <div class="stat-change negative">
+                            <i class="fas fa-arrow-down"></i> 2 days longer
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-title">AI Success Rate</div>
+                        <div class="stat-value">82%</div>
+                        <div class="stat-change positive">
+                            <i class="fas fa-arrow-up"></i> 5% improvement
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">Active Deals Pipeline</h2>
+                        <div class="card-actions">
+                            <button class="btn btn-outline" id="filterDeals">
+                                <i class="fas fa-filter"></i> Filter
+                            </button>
+                            <button class="btn" id="newDeal">
+                                <i class="fas fa-plus"></i> New Deal
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="deal-card">
+                        <div class="deal-header">
+                            <div>
+                                <div class="deal-title">TechNova Solutions - HQ Expansion</div>
+                                <div class="deal-status">Negotiation Phase</div>
+                            </div>
+                            <div class="deal-property">450 Main St, San Francisco, CA - 25,000 sqft</div>
+                        </div>
+                        
+                        <div class="deal-meta">
+                            <div class="deal-meta-item">
+                                <div class="deal-meta-label">Deal Value</div>
+                                <div class="deal-meta-value">$4.2M/year</div>
+                            </div>
+                            <div class="deal-meta-item">
+                                <div class="deal-meta-label">Term</div>
+                                <div class="deal-meta-value">5 years</div>
+                            </div>
+                            <div class="deal-meta-item">
+                                <div class="deal-meta-label">AI Confidence</div>
+                                <div class="deal-meta-value">
+                                    <span class="badge badge-success">88%</span>
+                                </div>
+                            </div>
+                            <div class="deal-meta-item">
+                                <div class="deal-meta-label">Last Activity</div>
+                                <div class="deal-meta-value">Today, 11:15 AM</div>
+                            </div>
+                        </div>
+                        
+                        <div class="deal-actions">
+                            <button class="btn btn-success">
+                                <i class="fas fa-phone"></i> Schedule Call
+                            </button>
+                            <button class="btn">
+                                <i class="fas fa-envelope"></i> Send Email
+                            </button>
+                            <button class="btn btn-outline">
+                                <i class="fas fa-eye"></i> View Details
+                            </button>
+                        </div>
+                        
+                        <div class="comms-log">
+                            <h3 style="margin-bottom: 15px; color: var(--accent-crimson-light);">Communication Log</h3>
+                            
+                            <div class="comms-item">
+                                <div class="comms-header">
+                                    <div class="comms-method">
+                                        <i class="fas fa-phone"></i>
+                                        <span>AI Voice Call</span>
+                                    </div>
+                                    <div class="comms-date">Today, 11:15 AM</div>
+                                </div>
+                                <div class="comms-content">
+                                    <p><strong>Summary:</strong> Discussed revised lease terms with CFO Sarah Johnson. She expressed interest in the updated proposal but requested additional concessions on TI allowance.</p>
+                                    <p><strong>AI Analysis:</strong> 78% likelihood of acceptance with minor adjustments. Suggested counteroffer with $50k increase in TI allowance.</p>
+                                </div>
+                                <div class="comms-actions">
+                                    <button class="btn btn-outline" style="padding: 5px 10px; font-size: 12px;">
+                                        <i class="fas fa-headphones"></i> Listen
+                                    </button>
+                                    <button class="btn btn-outline" style="padding: 5px 10px; font-size: 12px;">
+                                        <i class="fas fa-file-alt"></i> Transcript
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="comms-item">
+                                <div class="comms-header">
+                                    <div class="comms-method">
+                                        <i class="fas fa-envelope"></i>
+                                        <span>Email Thread</span>
+                                    </div>
+                                    <div class="comms-date">Yesterday, 3:42 PM</div>
+                                </div>
+                                <div class="comms-content">
+                                    <p><strong>Subject:</strong> Revised Lease Proposal - 450 Main St</p>
+                                    <p><strong>AI Analysis:</strong> Recipient opened email 3 times. No reply yet but high engagement detected.</p>
+                                </div>
+                                <div class="comms-actions">
+                                    <button class="btn btn-outline" style="padding: 5px 10px; font-size: 12px;">
+                                        <i class="fas fa-envelope-open"></i> View Email
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="deal-card">
+                        <div class="deal-header">
+                            <div>
+                                <div class="deal-title">UrbanEats Delivery - Regional Hub</div>
+                                <div class="deal-status">Initial Outreach</div>
+                            </div>
+                            <div class="deal-property">1200 Industrial Way, Brooklyn, NY - 40,000 sqft</div>
+                        </div>
+                        
+                        <div class="deal-meta">
+                            <div class="deal-meta-item">
+                                <div class="deal-meta-label">Deal Value</div>
+                                <div class="deal-meta-value">$2.8M/year</div>
+                            </div>
+                            <div class="deal-meta-item">
+                                <div class="deal-meta-label">Term</div>
+                                <div class="deal-meta-value">7 years</div>
+                            </div>
+                            <div class="deal-meta-item">
+                                <div class="deal-meta-label">AI Confidence</div>
+                                <div class="deal-meta-value">
+                                    <span class="badge badge-warning">65%</span>
+                                </div>
+                            </div>
+                            <div class="deal-meta-item">
+                                <div class="deal-meta-label">Last Activity</div>
+                                <div class="deal-meta-value">2 days ago</div>
+                            </div>
+                        </div>
+                        
+                        <div class="deal-actions">
+                            <button class="btn btn-success">
+                                <i class="fas fa-phone"></i> Schedule Call
+                            </button>
+                            <button class="btn">
+                                <i class="fas fa-envelope"></i> Send Email
+                            </button>
+                            <button class="btn btn-outline">
+                                <i class="fas fa-eye"></i> View Details
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Analytics Tab -->
+            <div class="tab-content" id="analytics">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">Deal Performance</h2>
+                        <div class="card-actions">
+                            <button class="btn btn-outline">
+                                <i class="fas fa-calendar-alt"></i> Date Range
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="grid" style="grid-template-columns: 2fr 1fr; margin-bottom: 20px;">
+                        <div class="chart-container">
+                            <canvas id="dealsChart"></canvas>
+                        </div>
+                        <div>
+                            <div class="stat-card" style="margin-bottom: 20px;">
+                                <div class="stat-title">Total Deal Value</div>
+                                <div class="stat-value">$18.7M</div>
+                                <div class="stat-change positive">
+                                    <i class="fas fa-arrow-up"></i> 22% from Q1
+                                </div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-title">Avg Deal Size</div>
+                                <div class="stat-value">$3.2M</div>
+                                <div class="stat-change positive">
+                                    <i class="fas fa-arrow-up"></i> 8% increase
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">Tenant Scoring Distribution</h2>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="scoringChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- New Deal Modal -->
+    <div class="modal" id="newDealModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Initiate New Deal</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="newDealForm">
+                    <div class="form-group">
+                        <label for="dealProperty">Property</label>
+                        <select id="dealProperty" class="form-control" required>
+                            <option value="">Select a property</option>
+                            <option value="prop1">450 Main St, San Francisco, CA</option>
+                            <option value="prop2">1200 Industrial Way, Brooklyn, NY</option>
+                            <option value="prop3">800 Commerce St, Austin, TX</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="dealTenant">Tenant</label>
+                        <select id="dealTenant" class="form-control" required>
+                            <option value="">Select a tenant</option>
+                            <option value="tenant1">TechNova Solutions</option>
+                            <option value="tenant2">UrbanEats Delivery</option>
+                            <option value="tenant3">GreenLife Organics</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="dealType">Deal Type</label>
+                        <select id="dealType" class="form-control" required>
+                            <option value="">Select deal type</option>
+                            <option value="lease">New Lease</option>
+                            <option value="renewal">Lease Renewal</option>
+                            <option value="expansion">Space Expansion</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="dealStrategy">Negotiation Strategy</label>
+                        <select id="dealStrategy" class="form-control" required>
+                            <option value="">Select strategy</option>
+                            <option value="aggressive">Aggressive (Max Value)</option>
+                            <option value="balanced">Balanced Approach</option>
+                            <option value="conservative">Conservative (High Close Probability)</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline modal-close">Cancel</button>
+                <button class="btn" id="submitDeal">Initiate Deal</button>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-logo">Quantum IOS AI Deal Platform</div>
+            <div class="footer-text">© 2023 Quantum IOS. All rights reserved.</div>
+        </div>
+    </footer>
+
+    <script>
+        // Tab functionality
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                // Remove active class from all tabs and contents
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                
+                // Add active class to clicked tab and corresponding content
+                this.classList.add('active');
+                const tabId = this.getAttribute('data-tab');
+                document.getElementById(tabId).classList.add('active');
+            });
+        });
+
+        // Vertical tab functionality
+        document.querySelectorAll('.sidebar-tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                // Remove active class from all tabs and contents
+                document.querySelectorAll('.sidebar-tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.tab-content-vertical').forEach(c => c.classList.remove('active'));
+                
+                // Add active class to clicked tab and corresponding content
+                this.classList.add('active');
+                const tabId = this.getAttribute('data-tab');
+                document.getElementById(tabId).classList.add('active');
+            });
+        });
+
+        // Tenant detail view toggle
+        document.querySelectorAll('table tbody tr button').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.getElementById('profiler').querySelector('table').style.display = 'none';
+                document.getElementById('tenantDetail').style.display = 'block';
+            });
+        });
+
+        document.getElementById('backToList').addEventListener('click', function() {
+            document.getElementById('profiler').querySelector('table').style.display = 'table';
+            document.getElementById('tenantDetail').style.display = 'none';
+        });
+
+        // Modal functionality
+        document.getElementById('newDeal').addEventListener('click', function() {
+            document.getElementById('newDealModal').style.display = 'block';
+        });
+
+        document.querySelectorAll('.modal-close').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.getElementById('newDealModal').style.display = 'none';
+            });
+        });
+
+        // Close modal when clicking outside
+        window.addEventListener('click', function(e) {
+            if (e.target === document.getElementById('newDealModal')) {
+                document.getElementById('newDealModal').style.display = 'none';
+            }
+        });
+
+        // Submit new deal
+        document.getElementById('submitDeal').addEventListener('click', function() {
+            // Validate form
+            const form = document.getElementById('newDealForm');
+            const inputs = form.querySelectorAll('select[required]');
+            let isValid = true;
+            
+            inputs.forEach(input => {
+                if (!input.value) {
+                    isValid = false;
+                    input.style.borderColor = 'var(--danger)';
+                } else {
+                    input.style.borderColor = 'rgba(212, 175, 55, 0.3)';
+                }
+            });
+            
+            if (isValid) {
+                // In a real app, you would submit the form data to your backend
+                alert('New deal initiated! The Underwriter AI will now begin the negotiation process.');
+                document.getElementById('newDealModal').style.display = 'none';
+                form.reset();
+                
+                // Switch to Underwriter tab
+                document.querySelector('.tab[data-tab="underwriter"]').click();
+            }
+        });
+
+        // Charts
+        document.addEventListener('DOMContentLoaded', function() {
+            // Revenue Chart
+            const revenueCtx = document.getElementById('revenueChart').getContext('2d');
+            const revenueChart = new Chart(revenueCtx, {
+                type: 'line',
+                data: {
+                    labels: ['2020', '2021', '2022', '2023 (est)', '2024 (proj)'],
+                    datasets: [{
+                        label: 'Annual Revenue ($M)',
+                        data: [45, 68, 92, 120, 160],
+                        borderColor: 'var(--accent-crimson)',
+                        backgroundColor: 'rgba(212, 175, 55, 0.1)',
+                        tension: 0.3,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            labels: {
+                                color: 'var(--text-light)'
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                color: 'var(--text-gray)'
+                            },
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            }
+                        },
+                        x: {
+                            ticks: {
+                                color: 'var(--text-gray)'
+                            },
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            }
+                        }
+                    }
+                }
+            });
+            
+            // Deals Chart
+            const dealsCtx = document.getElementById('dealsChart').getContext('2d');
+            const dealsChart = new Chart(dealsCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                    datasets: [
+                        {
+                            label: 'Deals Initiated',
+                            data: [5, 7, 9, 8, 10, 12],
+                            backgroundColor: 'rgba(212, 175, 55, 0.7)'
+                        },
+                        {
+                            label: 'Deals Closed',
+                            data: [2, 4, 5, 3, 6, 5],
+                            backgroundColor: 'rgba(40, 167, 69, 0.7)'
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            labels: {
+                                color: 'var(--text-light)'
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                color: 'var(--text-gray)'
+                            },
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            }
+                        },
+                        x: {
+                            ticks: {
+                                color: 'var(--text-gray)'
+                            },
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            }
+                        }
+                    }
+                }
+            });
+            
+            // Scoring Chart
+            const scoringCtx = document.getElementById('scoringChart').getContext('2d');
+            const scoringChart = new Chart(scoringCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['High (80-100)', 'Medium (60-79)', 'Low (0-59)'],
+                    datasets: [{
+                        data: [38, 72, 32],
+                        backgroundColor: [
+                            'rgba(40, 167, 69, 0.7)',
+                            'rgba(255, 193, 7, 0.7)',
+                            'rgba(220, 53, 69, 0.7)'
+                        ],
+                        borderColor: [
+                            'rgba(40, 167, 69, 1)',
+                            'rgba(255, 193, 7, 1)',
+                            'rgba(220, 53, 69, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'right',
+                            labels: {
+                                color: 'var(--text-light)'
+                            }
+                        }
+                    }
+                }
+            });
+        });
+
+        // Refresh data
+        document.getElementById('refreshData').addEventListener('click', function() {
+            // Show loading state
+            const btn = this;
+            const originalHtml = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Refreshing...';
+            btn.disabled = true;
+            
+            // Simulate API call
+            setTimeout(() => {
+                // In a real app, you would fetch fresh data from your backend
+                alert('Data refreshed successfully!');
+                btn.innerHTML = originalHtml;
+                btn.disabled = false;
+            }, 1500);
+        });
+    </script>
+</body>
+</html>

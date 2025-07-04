@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>The Analyzer | Quantum IOS</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&amp;family=Playfair+Display:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+        :root {
+            --primary-dark: #0A0A0A;
+            --secondary-dark: #1A1A1A;
+            --accent-crimson: #D4AF37; /* Gold */
+            --accent-crimson-light: #FFD700; /* Light Gold */
+            --text-light: #F5F5F5;
+            --text-gray: #AAAAAA;
+            --success: #28A745;
+            --warning: #FFC107;
+            --danger: #DC3545;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--primary-dark);
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background-color: var(--secondary-dark);
+            padding: 20px 0;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 40px;
+            margin-right: 15px;
+        }
+
+        .logo-text h1 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            font-size: 24px;
+            color: var(--accent-crimson);
+            letter-spacing: 1px;
+        }
+
+        .logo-text span {
+            font-size: 12px;
+            color: var(--text-gray);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .main {
+            padding: 40px 0;
+        }
+
+        .hero {
+            text-align: center;
+            margin-bottom: 50px;
+            padding: 40px 0;
+            background: linear-gradient(rgba(10, 10, 10, 0.9), rgba(10, 10, 10, 0.9)), url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80') no-repeat center center/cover;
+            border-radius: 8px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.1) 0%, rgba(212, 175, 55, 0) 50%);
+        }
+
+        .hero h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 42px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--accent-crimson);
+        }
+
+        .hero p {
+            max-width: 700px;
+            margin: 0 auto 30px;
+            font-size: 18px;
+            color: var(--text-gray);
+        }
+
+        .search-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: var(--secondary-dark);
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+        }
+
+        .search-form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--accent-crimson-light);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            background-color: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 4px;
+            color: var(--text-light);
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--accent-crimson);
+            box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.2);
+        }
+
+        .btn {
+            padding: 12px 24px;
+            background-color: var(--accent-crimson);
+            color: var(--text-light);
+            border: none;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn:hover {
+            background-color: var(--accent-crimson-light);
+            transform: translateY(-2px);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .results-container {
+            display: block;
+            margin-top: 50px;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 28px;
+            font-weight: 600;
+            color: var(--accent-crimson);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+        }
+
+        .property-card {
+            background-color: var(--secondary-dark);
+            border-radius: 8px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+        }
+
+        .property-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+
+        .property-address h3 {
+            font-size: 22px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .property-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .meta-item {
+            flex: 1 1 200px;
+        }
+
+        .meta-item h4 {
+            font-size: 14px;
+            color: var(--text-gray);
+            margin-bottom: 5px;
+            text-transform: uppercase;
+        }
+
+        .meta-item p {
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        .features-list {
+            columns: 2;
+            column-gap: 30px;
+            margin: 20px 0;
+        }
+
+        .features-list li {
+            margin-bottom: 10px;
+            list-style-type: none;
+            position: relative;
+            padding-left: 20px;
+        }
+
+        .features-list li::before {
+            content: '•';
+            color: var(--accent-crimson);
+            position: absolute;
+            left: 0;
+            font-size: 20px;
+            line-height: 1;
+        }
+
+        .score-card {
+            background-color: rgba(212, 175, 55, 0.05);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .score-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .score-title {
+            font-weight: 600;
+            font-size: 18px;
+            color: var(--accent-crimson-light);
+        }
+
+        .score-value {
+            font-size: 36px;
+            font-weight: 700;
+            color: var(--accent-crimson);
+        }
+
+        .score-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px;
+        }
+
+        .score-detail {
+            background-color: rgba(255, 255, 255, 0.03);
+            padding: 10px;
+            border-radius: 4px;
+        }
+
+        .score-detail h5 {
+            font-size: 12px;
+            color: var(--text-gray);
+            margin-bottom: 5px;
+            text-transform: uppercase;
+        }
+
+        .score-detail p {
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        th {
+            background-color: rgba(212, 175, 55, 0.1);
+            color: var(--accent-crimson-light);
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 12px;
+            letter-spacing: 1px;
+        }
+
+        tr:hover {
+            background-color: rgba(212, 175, 55, 0.03);
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .badge-success {
+            background-color: rgba(40, 167, 69, 0.2);
+            color: #28A745;
+        }
+
+        .badge-warning {
+            background-color: rgba(255, 193, 7, 0.2);
+            color: #FFC107;
+        }
+
+        .badge-danger {
+            background-color: rgba(220, 53, 69, 0.2);
+            color: #DC3545;
+        }
+
+        .tenant-card {
+            background-color: var(--secondary-dark);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-left: 4px solid var(--accent-crimson);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .tenant-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .tenant-name {
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .tenant-org {
+            color: var(--text-gray);
+            font-size: 14px;
+        }
+
+        .tenant-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .tenant-detail h5 {
+            font-size: 12px;
+            color: var(--text-gray);
+            margin-bottom: 5px;
+            text-transform: uppercase;
+        }
+
+        .tenant-detail p {
+            font-size: 14px;
+        }
+
+        .strategy-card {
+            background-color: rgba(212, 175, 55, 0.05);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .strategy-card h4 {
+            color: var(--accent-crimson-light);
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        .strategy-card p {
+            margin-bottom: 10px;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 300px;
+            margin: 20px 0;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 40px;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid rgba(212, 175, 55, 0.2);
+            border-top-color: var(--accent-crimson);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        footer {
+            background-color: var(--secondary-dark);
+            padding: 30px 0;
+            text-align: center;
+            border-top: 1px solid rgba(212, 175, 55, 0.2);
+            margin-top: 50px;
+        }
+
+        .footer-logo {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            font-size: 20px;
+            color: var(--accent-crimson);
+            margin-bottom: 10px;
+        }
+
+        .footer-text {
+            font-size: 12px;
+            color: var(--text-gray);
+        }
+
+        /* HTML content styling */
+        .html-content h1, 
+        .html-content h2, 
+        .html-content h3, 
+        .html-content h4, 
+        .html-content h5, 
+        .html-content h6 {
+            color: var(--accent-crimson-light);
+            margin: 15px 0 10px;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .html-content h1 {
+            font-size: 24px;
+        }
+
+        .html-content h2 {
+            font-size: 20px;
+        }
+
+        .html-content h3 {
+            font-size: 18px;
+        }
+
+        .html-content p {
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+
+        .html-content ul, 
+        .html-content ol {
+            margin: 15px 0;
+            padding-left: 20px;
+        }
+
+        .html-content li {
+            margin-bottom: 8px;
+        }
+
+        .html-content table {
+            width: 100%;
+            margin: 20px 0;
+            border-collapse: collapse;
+        }
+
+        .html-content th, 
+        .html-content td {
+            padding: 12px 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .html-content th {
+            background-color: rgba(212, 175, 55, 0.1);
+            color: var(--accent-crimson-light);
+        }
+
+        .html-content tr:nth-child(even) {
+            background-color: rgba(255, 255, 255, 0.03);
+        }
+
+        @media (max-width: 768px) {
+            .features-list {
+                columns: 1;
+            }
+            
+            .property-meta {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .score-details {
+                grid-template-columns: 1fr;
+            }
+            
+            .tenant-details {
+                grid-template-columns: 1fr;
+            }
+
+            .hero h2 {
+                font-size: 32px;
+            }
+        }
+    </style>
+</head>
+<body>
+<header>
+<div class="container header-content">
+<div class="logo">
+<img alt="Quantum IOS Logo" height="40" src="logo.png" width="40"/>
+<div class="logo-text">
+<h1>The Analyzer</h1>
+<span>Quantum IOS</span>
+</div>
+</div>
+</div>
+</header>
+<main class="main">
+<div class="container">
+<section class="hero">
+<h2>Industrial Property Intelligence Platform</h2>
+<p>Analyze commercial properties with precision, identify ideal tenants, and maximize your investment potential with our advanced scoring system.</p>
+</section>
+<div class="search-container">
+<form class="search-form" id="propertyForm">
+<div class="form-group">
+<label for="propertyAddress">Property Address</label>
+<input class="form-control" id="propertyAddress" placeholder="Enter full property address" required="" type="text" value="1247 Industrial Blvd, Chicago, IL 6608"/>
+</div>
+<button class="btn" type="submit">Analyze Property</button>
+</form>
+</div>
+<div class="loading" id="loading">
+<div class="spinner"></div>
+<p>Analyzing property and identifying optimal tenants...</p>
+</div>
+<div class="results-container" id="resultsContainer">
+<section id="propertyOverview">
+<h2 class="section-title">Property Overview</h2>
+<div class="property-card">
+<div class="property-header">
+<div class="property-address">
+<h3 id="propertyAddressDisplay">1247 Industrial Blvd, Chicago, IL 60608</h3>
+</div>
+<div class="property-score">
+<span class="badge badge-success" id="propertyClassDisplay">Warehouse (Suitable for Industrial Operating Space – IOS)</span>
+</div>
+</div>
+<div class="html-content" id="propertyFeatures">
+<div class="property-meta">
+<div class="meta-item">
+<h4>Acreage</h4>
+<p>8.5 acres</p>
+</div>
+<div class="meta-item">
+<h4>Total Square Footage</h4>
+<p>125,000 sqft</p>
+</div>
+<div class="meta-item">
+<h4>Building Type</h4>
+<p>Manufacturing / Distribution</p>
+</div>
+<div class="meta-item">
+<h4>Zoning</h4>
+<p>M-1 Manufacturing</p>
+</div>
+<div class="meta-item">
+<h4>Coordinates</h4>
+<p>N/A</p>
+</div>
+</div>
+<h4>Key Physical Attributes</h4>
+<ul class="features-list"><li>Clear height: 32'</li><li>Dock doors: 12</li><li>Drive-in bays: 1</li><li>Construction type: Steel frame with concrete floor</li><li>Parking spaces: 100</li></ul>
+</div>
+</div>
+</section>
+<section id="marketAnalysis">
+<h2 class="section-title">Market Context</h2>
+<div class="property-card html-content" id="marketAnalysisContent">
+<h3>Local Industrial Trends</h3>
+<ul>
+<li>Vacancy rate: Low (assumed 5% based on regional data)</li>
+<li>Lease rates: $7.50/sq ft</li>
+<li>Absorption rate: Positive, due to new companies entering the market</li>
+</ul>
+<h3>Logistics Infrastructure</h3>
+<p>Situated near major highways, facilitating easy access to Port of Jacksonville</p>
+<p>Close proximity to rail lines servicing regional distribution</p>
+<h3>Regional Growth Drivers</h3>
+<ul>
+<li>Employment growth: Rapidly increasing in logistics and industrial sectors</li>
+<li>Population growth: Jacksonville experiencing significant growth, particularly in manufacturing</li>
+<li>New developments: Ongoing industrial projects in the area, expanding warehouse space and logistics facilities</li>
+</ul>
+<h3>Comparables</h3>
+<ul>
+<li>Nearby distribution warehouse – 35,000 sqft, 14' clear height, renovated</li>
+<li>700 Ellis Blvd - 40,000 sqft, 15' clear height, occupied by logistics firm</li>
+<li>Distribution center - 30,000 sqft, multiple loading docks, high demand</li>
+<li>Older warehouse - 50,000 sqft, 12' clear height, lower lease rate but steady demand</li>
+</ul>
+</div>
+</section>
+<section id="tenantAnalysis">
+<h2 class="section-title">Tenant Suitability Analysis</h2>
+<div class="property-card html-content" id="tenantAnalysisContent">
+<h3>Top Candidate Tenants</h3>
+<table>
+<thead>
+<tr>
+<th>Industry Category</th>
+<th>Operational Location</th>
+<th>Space Need</th>
+<th>Infrastructure Needs</th>
+</tr>
+</thead>
+<tbody><tr><td>Midwest Logistics Corp</td><td>Chicago, IL</td><td>125,000 sqft</td><td>Multi-modal Distribution</td></tr><tr><td>Aurora Manufacturing</td><td>Chicago, IL</td><td>125,000 sqft</td><td>Auto Parts Assembly</td></tr><tr><td>ChemCore Distribution</td><td>Chicago, IL</td><td>125,000 sqft</td><td>Chemical Storage</td></tr></tbody>
+</table>
+</div>
+</section>
+<section id="scoringSystem">
+<h2 class="section-title">100-Point Scoring Model</h2>
+<div class="html-content" id="scoringCardsContainer">
+<div class="score-card">
+<div class="score-header">
+<div class="score-title">Top Tenant Scores</div>
+<div class="score-value">89</div>
+</div>
+<div class="score-details">
+<div class="score-detail">
+<h5>Operational Fit</h5>
+<p>27/30</p>
+</div>
+<div class="score-detail">
+<h5>Physical Compatibility</h5>
+<p>19/20</p>
+</div>
+<div class="score-detail">
+<h5>Financial Strength</h5>
+<p>18/20</p>
+</div>
+<div class="score-detail">
+<h5>Strategic Synergy</h5>
+<p>8/10</p>
+</div>
+<div class="score-detail">
+<h5>Lease Terms Potential</h5>
+<p>8/10</p>
+</div>
+<div class="score-detail">
+<h5>Risk Profile</h5>
+<p>9/10</p>
+</div>
+</div>
+</div>
+</div>
+<div class="property-card html-content" id="rankedTenantsContent">
+<h3>Ranked Tenant Scoring</h3>
+<table>
+<thead>
+<tr>
+<th>Rank</th>
+<th>Tenant Name</th>
+<th>Total Score</th>
+<th>Fit Summary</th>
+<th>Est. Cap Rate</th>
+</tr>
+</thead>
+<tbody><tr><td>1</td><td>Midwest Logistics Corp</td><td>94</td><td>Perfect match for multi-modal distribution needs</td><td>7.2%</td></tr><tr><td>2</td><td>Aurora Manufacturing</td><td>87</td><td>Excellent fit for automotive parts assembly</td><td>7.2%</td></tr><tr><td>3</td><td>ChemCore Distribution</td><td>81</td><td>Strong candidate for specialty chemicals storage</td><td>7.2%</td></tr></tbody>
+</table>
+</div>
+</section>
+<section id="financialAnalysis">
+<h2 class="section-title">Financial Modeling</h2>
+<div class="property-card">
+<div class="html-content" id="financialData">
+<h3>Projected Year 1 Pro Forma for Top 3 Tenants</h3>
+<p>Base Rent: $7.50/sq ft</p>
+<p>Operating Expenses (OPEX): $150,000</p>
+<table>
+<thead>
+<tr>
+<th>Tenant Name</th>
+<th>Base Rent</th>
+<th>OPEX</th>
+<th>NOI</th>
+<th>Est. Cap Rate</th>
+</tr>
+</thead>
+<tbody><tr><td>Midwest Logistics Corp</td><td>$812,500</td><td>$182,500</td><td>$630,000</td><td>7.2%</td></tr><tr><td>Aurora Manufacturing</td><td>$812,500</td><td>$182,500</td><td>$630,000</td><td>7.2%</td></tr><tr><td>ChemCore Distribution</td><td>$812,500</td><td>$182,500</td><td>$630,000</td><td>7.2%</td></tr></tbody>
+</table>
+</div>
+<div class="chart-container">
+<canvas id="financialChart"></canvas>
+</div>
+</div>
+</section>
+<section id="leasingStrategy">
+<h2 class="section-title">Leasing Strategy</h2>
+<div class="property-card html-content" id="leasingStrategyContent">
+<h3>Top Tenant Targets</h3>
+<ol>
+<li>Sean Ding</li>
+<li>David Chisholm</li>
+<li>Marks Hernandez</li>
+<li>Alycia Ramirez</li>
+<li>Jeremy Blondel</li>
+</ol>
+<h3>Recommended Leasing Strategy</h3>
+<ul>
+<li>Utilize targeted marketing focused on logistics and manufacturing firms</li>
+<li>Highlight incentives such as tenant improvements and flexible terms</li>
+<li>Leverage nearby logistics infrastructure to attract tenants with robust operational needs</li>
+</ul>
+<h3>Tenant Pitch Strategies</h3>
+
+
+
+<h3>Risk Coverage Insights</h3>
+<ul>
+<li>Current coverage appears adequate; confirm specific limits</li>
+<li>No significant claims noted; maintain consistent review for renewals</li>
+<li>Ensure all tenants have provided updated COI listing landlord as additional insured</li>
+</ul>
+<h3>Local Intelligence</h3>
+<ul>
+<li>Diverse industrial workforce, skilled in logistics, manufacturing</li>
+<li>Majority of workforce commutes within 30 miles, providing a stable labor pool</li>
+<li>Proximity to logistics firms supports high demand for warehouse space</li>
+</ul>
+<p><em>This report provides an actionable strategy to drive investment and leasing decisions confidently.</em></p>
+<div class="strategy-card"><h4>Midwest Logistics Corp</h4><p>Operational Fit: Your current 3PL operations require 30' clear height and 10+ dock doors. This facility exceeds both requirements with 32' ceiling and 12 loading positions.</p><p>Competitive Edge: Located 2.3 miles from major rail intermodal facility, reducing last-mile costs by 15-20% compared to suburban alternatives.</p><p>Incentive Strategy: Propose 5-year lease with 6-month rent-free period and TI allowance of $2.50/sf for specialized racking systems.</p></div><div class="strategy-card"><h4>Aurora Manufacturing</h4><p>Operational Fit: Facility layout optimized for assembly line operations with column spacing supporting overhead crane systems.</p><p>Competitive Edge: Within 15 minutes of Ford Stamping Plant and major automotive suppliers, enabling just-in-time delivery.</p><p>Incentive Strategy: Offer build-to-suit improvements for specialized electrical requirements with 7-year lease commitment.</p></div><div class="strategy-card"><h4>ChemCore Distribution</h4><p>Operational Fit: Concrete flooring and ventilation systems meet requirements for Class 3 chemical storage and handling.</p><p>Competitive Edge: Rail spur access enables bulk chemical transportation, reducing costs by 25% vs. truck-only facilities.</p><p>Incentive Strategy: Structured lease with percentage rent option tied to throughput volumes, aligning interests for growth.</p></div></div>
+</section>
+</div>
+</div>
+</main>
+<footer>
+<div class="container">
+<div class="footer-logo">The Analyzer</div>
+<div class="footer-text">© 2023 Quantum IOS. All rights reserved.</div>
+</div>
+</footer>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Data for the chart
+        const tenantsData = [
+            {
+                "Tenant Name": "Midwest Logistics Corp",
+                "Net Operating Income": "630000",
+                "Estimated Cap Rate": "7.2%"
+            },
+            {
+                "Tenant Name": "Aurora Manufacturing",
+                "Net Operating Income": "630000",
+                "Estimated Cap Rate": "7.2%"
+            },
+            {
+                "Tenant Name": "ChemCore Distribution",
+                "Net Operating Income": "630000",
+                "Estimated Cap Rate": "7.2%"
+            }
+        ];
+        
+        // Initialize the financial chart
+        createFinancialChart(tenantsData);
+
+        document.getElementById('propertyForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            // In this demo version, we're not making actual API calls
+            // Just show the hardcoded results
+            document.getElementById('loading').style.display = 'none';
+            document.getElementById('resultsContainer').style.display = 'block';
+        });
+    });
+
+    function createFinancialChart(tenantsData) {
+        const ctx = document.getElementById('financialChart').getContext('2d');
+        
+        const labels = tenantsData.map(tenant => tenant["Tenant Name"]);
+        const netIncomes = tenantsData.map(tenant => parseFloat(tenant["Net Operating Income"] || '0'));
+        const capRates = tenantsData.map(tenant => parseFloat((tenant["Estimated Cap Rate"] || '0%').replace('%', '')));
+        
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [
+                    {
+                        label: 'Net Operating Income',
+                        data: netIncomes,
+                        backgroundColor: 'rgba(212, 175, 55, 0.7)',
+                        borderColor: 'rgba(212, 175, 55, 1)',
+                        borderWidth: 1,
+                        yAxisID: 'y'
+                    },
+                    {
+                        label: 'Estimated Cap Rate (%)',
+                        data: capRates,
+                        backgroundColor: 'rgba(255, 215, 0, 0.7)',
+                        borderColor: 'rgba(255, 215, 0, 1)',
+                        borderWidth: 1,
+                        yAxisID: 'y1',
+                        type: 'line'
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        type: 'linear',
+                        display: true,
+                        position: 'left',
+                        title: {
+                            display: true,
+                            text: 'Net Operating Income ($)'
+                        },
+                        grid: {
+                            color: 'rgba(255, 255, 255, 0.1)'
+                        },
+                        ticks: {
+                            callback: function(value) {
+                                return '$' + value.toLocaleString();
+                            },
+                            color: 'rgba(255, 255, 255, 0.7)'
+                        }
+                    },
+                    y1: {
+                        type: 'linear',
+                        display: true,
+                        position: 'right',
+                        title: {
+                            display: true,
+                            text: 'Cap Rate (%)'
+                        },
+                        grid: {
+                            drawOnChartArea: false,
+                        },
+                        ticks: {
+                            callback: function(value) {
+                                return value + '%';
+                            },
+                            color: 'rgba(255, 255, 255, 0.7)'
+                        }
+                    },
+                    x: {
+                        grid: {
+                            display: false
+                        },
+                        ticks: {
+                            color: 'rgba(255, 255, 255, 0.7)'
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        labels: {
+                            color: 'rgba(255, 255, 255, 0.7)'
+                        }
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                let label = context.dataset.label || '';
+                                if (label) {
+                                    label += ': ';
+                                }
+                                if (context.parsed.y !== null) {
+                                    if (context.dataset.label === 'Estimated Cap Rate (%)') {
+                                        label += context.parsed.y + '%';
+                                    } else {
+                                        label += '$' + context.parsed.y.toLocaleString();
+                                    }
+                                }
+                                return label;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    }
+    
+    function extractDollarValue(str) {
+        if (!str) return 0;
+        const match = str.match(/\$([\d,]+)/);
+        return match ? parseFloat(match[1].replace(/,/g, '')) : parseFloat(str.replace(/,/g, '')) || 0;
+    }
+</script>
+</body>
+</html>
